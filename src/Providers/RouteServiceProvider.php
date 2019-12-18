@@ -39,21 +39,17 @@ class RouteServiceProvider extends IlluminateServiceProvider
         $router->group([
             'module' => 'rocXolid-communication',
             'middleware' => [ 'web', 'auth.rocXolid' ],
-            'namespace' => '',
+            'namespace' => 'Softworx\RocXolid\Communication\Http\Controllers',
             'prefix' => sprintf('%s/communication', config('rocXolid.admin.general.routes.root', 'rocXolid')),
-            'as' => 'rocxolid.communication.',
+            'as' => 'rocXolid.communication.',
         ], function ($router) {
-            CrudRouter::create('email-order-notification', Http\Controllers\EmailOrderNotification\Controller::class);
-            CrudRouter::create('sms-order-notification', Http\Controllers\SmsOrderNotification\Controller::class);
-            CrudRouter::create('email-user-notification', Http\Controllers\EmailUserNotification\Controller::class);
-            CrudRouter::create('sms-user-notification', Http\Controllers\SmsUserNotification\Controller::class);
-            CrudRouter::create('email-system-notification', Http\Controllers\EmailSystemNotification\Controller::class);
-            CrudRouter::create('sms-system-notification', Http\Controllers\SmsSystemNotification\Controller::class);
+            CrudRouterService::create('email-notification', \EmailNotification\Controller::class);
+            CrudRouterService::create('sms-notification', \SmsNotification\Controller::class);
             // logs
-            CrudRouter::create('communication-log', Http\Controllers\CommunicationLog\Controller::class);
+            CrudRouterService::create('communication-log', \CommunicationLog\Controller::class);
 
             $router->group([
-                'namespace' => 'Softworx\RocXolid\Communication\Http\Controllers\CommunicationLog',
+                'namespace' => 'CommunicationLog',
                 'prefix' => 'communication-log',
             ], function ($router) {
                 $router->get('/model/{relation}/{id}', 'Controller@modelLog');
