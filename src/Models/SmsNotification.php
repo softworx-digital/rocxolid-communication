@@ -16,7 +16,7 @@ class SmsNotification extends AbstractCrudModel
     ];
 
     protected $fillable = [
-        'action',
+        'event',
         'sender',
         'recipient_phone_number',
         'content',

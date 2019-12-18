@@ -2,22 +2,22 @@
 
 namespace Softworx\RocXolid\Communication\Models;
 
-use Softworx\RocXolid\Services\ViewService;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Softworx\RocXolid\Services\ViewService;
 use Softworx\RocXolid\Models\AbstractCrudModel;
 use Softworx\RocXolid\Communication\Contracts\Sendable;
 use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
 // common traits
 use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
-// commerce traits
-use Softworx\RocXolid\Commerce\Models\Traits\HasShop;
+use Softworx\RocXolid\Common\Models\Traits\HasWeb;
+
 /**
  *
  */
 class EmailNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
-    use HasShop;
+    use HasWeb;
     use UserGroupAssociatedWeb;
     use SendableTrait;
 
@@ -26,8 +26,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     ];
 
     protected $fillable = [
-        'shop_id',
-        'action',
+        'event',
         'sender_email',
         'sender_name',
         'recipient_email',
@@ -37,11 +36,13 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     ];
 
     protected $relationships = [
-        'shop',
+        'web',
     ];
 
     protected $data = null;
+
     protected $items = null;
+
     protected $warehouse = null;
 
     public function setData($data)

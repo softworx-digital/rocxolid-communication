@@ -31,15 +31,15 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         */
-        'shop' => [
+        'web_id' => [
             'type' => ModelRelation::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
-                    'title' => 'shop'
+                    'title' => 'web_id'
                 ],
                 'relation' => [
-                    'name' => 'shop',
+                    'name' => 'web',
                     'column' => 'title',
                 ],
                 'wrapper' => [
@@ -49,11 +49,11 @@ class Repository extends AbstractCrudRepository
                 ],
             ],
         ],
-        'action' => [
+        'event' => [
             'type' => Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'action'
+                    'title' => 'event'
                 ],
                 'wrapper' => [
                     'attributes' => [

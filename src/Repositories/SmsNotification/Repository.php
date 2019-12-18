@@ -31,11 +31,11 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         */
-        'action' => [
+        'event' => [
             'type' => Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'action'
+                    'title' => 'event'
                 ],
                 'wrapper' => [
                     'attributes' => [

@@ -38,7 +38,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
     {
         $router->group([
             'module' => 'rocXolid-communication',
-            'middleware' => [ 'web', 'auth.rocXolid' ],
+            'middleware' => [ 'web', 'rocXolid.auth' ],
             'namespace' => 'Softworx\RocXolid\Communication\Http\Controllers',
             'prefix' => sprintf('%s/communication', config('rocXolid.admin.general.routes.root', 'rocXolid')),
             'as' => 'rocXolid.communication.',
