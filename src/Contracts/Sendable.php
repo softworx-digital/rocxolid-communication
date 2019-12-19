@@ -7,7 +7,7 @@ interface Sendable
 {
     public function getSendingModel($action);
 
-    public function getAction();
+    public function getEvent();
 
     public function getSender($flat = false);
 

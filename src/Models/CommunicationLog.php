@@ -15,7 +15,7 @@ class CommunicationLog extends AbstractCrudModel
     ];
 
     protected $fillable = [
-        'action',
+        'event',
         'sender',
         'recipient',
         'subject',

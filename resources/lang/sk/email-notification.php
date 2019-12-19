@@ -25,4 +25,7 @@ return [
             'plural' => 'e-mail notifikácie',
         ],
     ],
+    'placeholder' => [
+        'event' => 'Akcia, na základe ktorej sa odošle e-mail',
+    ],
 ];

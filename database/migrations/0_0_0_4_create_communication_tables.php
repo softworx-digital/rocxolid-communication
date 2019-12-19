@@ -35,7 +35,7 @@ class CreateCommunicationTables extends Migration
     {
         Schema::create('email_notifications', function (Blueprint $table) {
             $table->increments('id')->unique()->index();
-            $table->unsignedInteger('web_id');
+            $table->unsignedInteger('web_id')->nullable();
             $table->string('event');
             $table->string('sender_email');
             $table->string('sender_name');
@@ -62,7 +62,7 @@ class CreateCommunicationTables extends Migration
     {
         Schema::create('sms_notifications', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('web_id');
+            $table->unsignedInteger('web_id')->nullable();
             $table->string('event');
             $table->string('sender');
             $table->string('recipient_phone_number')->nullable();

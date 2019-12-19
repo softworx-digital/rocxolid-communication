@@ -1,6 +1,6 @@
 <?php
 
-namespace Softworx\Rocxolid\Communication\Providers;
+namespace Softworx\RocXolid\Communication\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;

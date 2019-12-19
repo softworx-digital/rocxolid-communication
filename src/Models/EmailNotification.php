@@ -36,14 +36,12 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     ];
 
     protected $relationships = [
-        'web',
+        // 'web',
     ];
 
     protected $data = null;
 
     protected $items = null;
-
-    protected $warehouse = null;
 
     public function setData($data)
     {
@@ -83,23 +81,6 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         }
 
         return $this->items;
-    }
-
-    public function setWarehouse($warehouse)
-    {
-        $this->warehouse = $warehouse;
-
-        return $this;
-    }
-
-    public function getWarehouse()
-    {
-        if (is_null($this->warehouse))
-        {
-            throw new \RuntimeException(sprintf('Warehouse not yet set to [%s]', get_class($this)));
-        }
-
-        return $this->warehouse;
     }
 
     public function getSender($flat = false)

@@ -24,6 +24,7 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->register(Providers\ViewServiceProvider::class);
         $this->app->register(Providers\RouteServiceProvider::class);
         $this->app->register(Providers\TranslationServiceProvider::class);
+        $this->app->register(Providers\EventServiceProvider::class);
     }
 
      /**

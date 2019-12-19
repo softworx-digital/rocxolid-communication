@@ -28,15 +28,15 @@ trait Sendable
         return $this->morphMany(CommunicationLog::class, 'sendable');
     }
 
-    public function getAction()
+    public function getEvent()
     {
-        return $this->action;
+        return $this->event;
     }
 
     public function logActivity($success, $error_description = null)
     {
         $log = new CommunicationLog([
-            'action' => $this->getAction(),
+            'event' => $this->getEvent(),
             'sender' => $this->getSender(true),
             'recipient' => $this->getRecipient(),
             'subject' => $this->getSubject(),
@@ -49,9 +49,9 @@ trait Sendable
 
         try
         {
-            if ($this->getSendingModel($this->getAction()))
+            if ($this->getSendingModel($this->getEvent()))
             {
-                $this->getSendingModel($this->getAction())->communicationLogs()->save($log);
+                $this->getSendingModel($this->getEvent())->communicationLogs()->save($log);
             }
         }
         catch (\Exception $e) // hotfix, kvoli affiliate (App\AjaxController)
