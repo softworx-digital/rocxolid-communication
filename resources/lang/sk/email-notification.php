@@ -2,19 +2,25 @@
 
 return [
     'column' => [
-        'event' => 'Akcia',
+        'event_type' => 'Akcia',
+        'is_enabled' => 'Aktivované',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',
         'recipient_email' => 'e-mail prijímateľa',
+        'cc_recipient_email' => 'Kópia (CC)',
+        'bcc_recipient_email' => 'Skrytá kópia (BCC)',
         'subject' => 'Predmet',
         'content' => 'Obsah',
         'description' => 'Popis',
     ],
     'field' => [
-        'event' => 'Akcia',
+        'event_type' => 'Akcia',
+        'is_enabled' => 'Aktivované',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',
         'recipient_email' => 'e-mail prijímateľa',
+        'cc_recipient_email' => 'Kópia (CC)',
+        'bcc_recipient_email' => 'Skrytá kópia (BCC)',
         'subject' => 'Predmet',
         'content' => 'Obsah',
         'description' => 'Popis - interná poznámka',
@@ -26,6 +32,6 @@ return [
         ],
     ],
     'placeholder' => [
-        'event' => 'Akcia, na základe ktorej sa odošle e-mail',
+        'event_type' => 'Akcia, na základe ktorej sa odošle e-mail',
     ],
 ];

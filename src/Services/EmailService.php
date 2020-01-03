@@ -21,8 +21,9 @@ class EmailService
             $success = $this->sendToProvider();
 
             $this->sendable->logActivity($success);
+            $this->sendable->setStatus($success);
 
-            return $success;
+            return $this->sendable;
         }
         else
         {
@@ -33,13 +34,28 @@ class EmailService
     private function sendToProvider()
     {
         // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
-        Mail::send('emails.plain', [ 'content' => $this->sendable->getContent() ], function ($message)
+        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function ($message)
         {
             $sender = $this->sendable->getSender();
 
             $message->subject($this->sendable->getSubject());
             $message->from($sender['email'], $sender['name']);
-            $message->to($this->sendable->getRecipient());
+
+            $this->sendable->getRecipients()->each(function ($address) use ($message) {
+                $message->to($address);
+            });
+
+            if (isset($this->sendable->cc_recipient_email)) {
+                collect(explode(',', $this->sendable->cc_recipient_email))->each(function ($address) use ($message) {
+                    $message->cc($address);
+                });
+            }
+
+            if (isset($this->sendable->bcc_recipient_email)) {
+                collect(explode(',', $this->sendable->bcc_recipient_email))->each(function ($address) use ($message) {
+                    $message->bcc($address);
+                });
+            }
 
             foreach ($this->sendable->getAttachments() as $file)
             {

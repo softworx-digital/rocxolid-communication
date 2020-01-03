@@ -2,6 +2,8 @@
 
 namespace Softworx\RocXolid\Communication\Contracts;
 
+use Illuminate\Support\Collection;
+
 // @todo - doplnit + typy
 interface Sendable
 {
@@ -11,7 +13,7 @@ interface Sendable
 
     public function getSender($flat = false);
 
-    public function getRecipient(): string;
+    public function getRecipients(): Collection;
 
     public function getContent(): string; // @todo - nejako inak renderovat content - asi cez fetchovanie componentu, ak to pojde
 

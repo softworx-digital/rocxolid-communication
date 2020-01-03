@@ -2,6 +2,7 @@
 
 namespace Softworx\RocXolid\Communication\Models;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Softworx\RocXolid\Services\ViewService;
 use Softworx\RocXolid\Models\AbstractCrudModel;
@@ -26,10 +27,13 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     ];
 
     protected $fillable = [
-        'event',
+        'event_type',
+        'is_enabled',
         'sender_email',
         'sender_name',
         'recipient_email',
+        'cc_recipient_email',
+        'bcc_recipient_email',
         'subject',
         'content',
         'description'
@@ -39,48 +43,9 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         // 'web',
     ];
 
-    protected $data = null;
-
-    protected $items = null;
-
-    public function setData($data)
+    public function getTitle()
     {
-        $this->data = $data;
-
-        return $this;
-    }
-
-    public function getData($key = null)
-    {
-        return !is_null($key) ? $this->data[$key] : $this->data;
-    }
-
-    public function getSendingModel($action)
-    {
-        switch ($action)
-        {
-            case 'warehouse_product_stock':
-                return $this->getWarehouse();
-            default:
-                throw new \InvalidArgumentException(sprintf('Unsupported action [%s] for sending model retrieval', $action));
-        }
-    }
-
-    public function setItems($items)
-    {
-        $this->items = $items;
-
-        return $this;
-    }
-
-    public function getItems()
-    {
-        if (is_null($this->items))
-        {
-            throw new \RuntimeException(sprintf('Items not yet set to [%s]', get_class($this)));
-        }
-
-        return $this->items;
+        return sprintf('<i class="fa fa-envelope-o mr-10"></i>%s', '');//$this->event);
     }
 
     public function getSender($flat = false)
@@ -96,36 +61,32 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         ];
     }
 
-    public function getRecipient(): string
-    {
-        return $this->recipient_email;
-    }
-
     public function getSubject(): string
     {
-        return $this->subject;
+        return ViewService::render($this->subject, $this->event->getSendableVariables());
     }
 
-    public function getAttachments()
+    public function getRecipients(): Collection
     {
-        return [];
-    }
+        $recipients = $this->event->getRecipients();
 
-    public function getTitle()
-    {
-        return '<i class="fa fa-envelope-o fa-2x fa-fw"></i>';
+        if ($this->recipient_email) {
+            $recipients->push($this->recipient_email);
+        }
+
+        return $recipients;
     }
 
     protected function renderContent(): string
     {
         $content = str_replace('-&gt;', '->', $this->content);
+        $content = nl2br($content);
 
-        /*
-        return ViewService::render($content, [
-            'items' => $this->getItems(),
-            'warehouse' => $this->getWarehouse(),
-        ]);
-        */
-        return ViewService::render($content, [ 'mail' => $this ]);
+        return ViewService::render($content, $this->event->getSendableVariables());
+    }
+
+    public function getAttachments()
+    {
+        return [];
     }
 }

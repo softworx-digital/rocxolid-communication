@@ -3,9 +3,9 @@
 namespace Softworx\RocXolid\Communication\Models\Forms\EmailNotification;
 
 use Softworx\RocXolid\Forms\AbstractCrudForm as RocXolidAbstractCrudForm;
-use Softworx\RocXolid\Forms\Fields\Type\Hidden;
 use Softworx\RocXolid\Forms\Fields\Type\WysiwygTextarea;
 use Softworx\RocXolid\Forms\Fields\Type\CollectionSelect;
+use Softworx\RocXolid\Forms\Fields\Type\Tagsinput;
 
 class Create extends RocXolidAbstractCrudForm
 {
@@ -17,11 +17,17 @@ class Create extends RocXolidAbstractCrudForm
 
     protected function adjustFieldsDefinition($fields)
     {
-        $fields['event']['type'] = CollectionSelect::class;
-        $fields['event']['options']['placeholder']['title'] = 'event';
-        $fields['event']['options']['collection'] = collect(config('rocXolid.communication.general.events'));
-        $fields['event']['options']['validation']['rules'][] = 'required';
-        // $fields['event']['options']['validation']['rules'][] = 'class_exists';
+        $fields['event_type']['type'] = CollectionSelect::class;
+        $fields['event_type']['options']['placeholder']['title'] = 'event_type';
+        $fields['event_type']['options']['validation']['rules'][] = 'required';
+        $fields['event_type']['options']['validation']['rules'][] = 'class_exists';
+        $fields['event_type']['options']['collection'] = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+            return __($signature);
+        });
+
+        $fields['recipient_email']['type'] = Tagsinput::class;
+        $fields['cc_recipient_email']['type'] = Tagsinput::class;
+        $fields['bcc_recipient_email']['type'] = Tagsinput::class;
 
         return $fields;
     }

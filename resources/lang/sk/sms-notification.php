@@ -2,7 +2,8 @@
 
 return [
     'column' => [
-        'event' => 'Akcia',
+        'event_type' => 'Akcia',
+        'is_enabled' => 'Aktivované',
         'sender' => 'Odosielateľ',
         'recipient_phone_number' => 'Tel. prijímateľa',
         'subject' => 'Predmet',
@@ -10,7 +11,8 @@ return [
         'description' => 'Popis',
     ],
     'field' => [
-        'event' => 'Akcia',
+        'event_type' => 'Akcia',
+        'is_enabled' => 'Aktivované',
         'sender' => 'Odosielateľ',
         'recipient_phone_number' => 'Tel. prijímateľa',
         'subject' => 'Predmet',
@@ -22,5 +24,8 @@ return [
             'singular' => 'SMS notifikácia',
             'plural' => 'SMS notifikácie',
         ],
+    ],
+    'placeholder' => [
+        'event_type' => 'Akcia, na základe ktorej sa odošle SMS',
     ],
 ];

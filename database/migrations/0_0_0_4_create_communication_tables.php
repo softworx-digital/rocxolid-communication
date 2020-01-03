@@ -36,10 +36,13 @@ class CreateCommunicationTables extends Migration
         Schema::create('email_notifications', function (Blueprint $table) {
             $table->increments('id')->unique()->index();
             $table->unsignedInteger('web_id')->nullable();
-            $table->string('event');
+            $table->boolean('is_enabled')->default(0);
+            $table->string('event_type');
             $table->string('sender_email');
             $table->string('sender_name');
             $table->string('recipient_email')->nullable();
+            $table->string('cc_recipient_email')->nullable();
+            $table->string('bcc_recipient_email')->nullable();
             $table->string('subject');
             $table->text('content');
             $table->text('description')->nullable();
@@ -63,7 +66,8 @@ class CreateCommunicationTables extends Migration
         Schema::create('sms_notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('web_id')->nullable();
-            $table->string('event');
+            $table->boolean('is_enabled')->default(0);
+            $table->string('event_type');
             $table->string('sender');
             $table->string('recipient_phone_number')->nullable();
             $table->text('content');

@@ -2,11 +2,31 @@
 
 namespace Softworx\RocXolid\Communication\Models\Traits;
 
+use Illuminate\Support\Collection;
+use Softworx\RocXolid\Communication\Contracts\CommunicationLoggable;
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
 
 trait Sendable
 {
     protected $_rendered_content = null;
+
+    protected $status = null;
+
+    protected $event = null;
+
+    public function setEvent($event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 
     public function getSender($flat = false): string
     {
@@ -15,8 +35,7 @@ trait Sendable
 
     public function getContent(): string
     {
-        if (is_null($this->_rendered_content))
-        {
+        if (is_null($this->_rendered_content)) {
             $this->_rendered_content = $this->renderContent();
         }
 
@@ -33,12 +52,17 @@ trait Sendable
         return $this->event;
     }
 
+    public function getSendingModel($event)
+    {
+        return null;
+    }
+
     public function logActivity($success, $error_description = null)
     {
         $log = new CommunicationLog([
-            'event' => $this->getEvent(),
+            'event' => get_class($this->getEvent()),
             'sender' => $this->getSender(true),
-            'recipient' => $this->getRecipient(),
+            'recipient' => $this->getRecipients()->join(';'),
             'subject' => $this->getSubject(),
             'content' => $this->getContent(),
             'is_success' => $success,
@@ -47,16 +71,8 @@ trait Sendable
 
         $this->communicationLogs()->save($log);
 
-        try
-        {
-            if ($this->getSendingModel($this->getEvent()))
-            {
-                $this->getSendingModel($this->getEvent())->communicationLogs()->save($log);
-            }
-        }
-        catch (\Exception $e) // hotfix, kvoli affiliate (App\AjaxController)
-        {
-
+        if ($this->getEvent()->getSendingModel() instanceof CommunicationLoggable) {
+            $this->getEvent()->getSendingModel()->communicationLogs()->save($log);
         }
 
         return $log;

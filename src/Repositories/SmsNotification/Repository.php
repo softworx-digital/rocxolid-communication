@@ -4,6 +4,7 @@ namespace Softworx\RocXolid\Communication\Repositories\SmsNotification;
 
 use Softworx\RocXolid\Repositories\AbstractCrudRepository;
 use Softworx\RocXolid\Repositories\Columns\Type\Text;
+use Softworx\RocXolid\Repositories\Columns\Type\Flag;
 use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
 
 class Repository extends AbstractCrudRepository
@@ -31,11 +32,11 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         */
-        'event' => [
+        'event_type' => [
             'type' => Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'event'
+                    'title' => 'event_type'
                 ],
                 'wrapper' => [
                     'attributes' => [
@@ -70,12 +71,11 @@ class Repository extends AbstractCrudRepository
                 ],
             ],
         ],
-        'content' => [
-            'type' => Text::class,
+        'is_enabled' => [
+            'type' => Flag::class,
             'options' => [
-                'shorten' => 200,
                 'label' => [
-                    'title' => 'content'
+                    'title' => 'is_enabled'
                 ],
             ],
         ],
