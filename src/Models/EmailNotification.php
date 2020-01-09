@@ -2,13 +2,18 @@
 
 namespace Softworx\RocXolid\Communication\Models;
 
+use App;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+// rocXolid services
 use Softworx\RocXolid\Services\ViewService;
+// rocXolid models
 use Softworx\RocXolid\Models\AbstractCrudModel;
+// rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Contracts\Sendable;
+// rocXolid communication model traits
 use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
-// common traits
+// rocXolid common model traits
 use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
 use Softworx\RocXolid\Common\Models\Traits\HasWeb;
 
@@ -45,7 +50,15 @@ class EmailNotification extends AbstractCrudModel implements Sendable
 
     public function getTitle()
     {
-        return sprintf('<i class="fa fa-envelope-o mr-10"></i>%s', '');//$this->event);
+        if ($this->event_type) {
+            $title = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+                return __($signature);
+            })->get($this->event_type);
+        } else {
+            $title = '';
+        }
+
+        return sprintf('<i class="fa fa-envelope-o mr-10"></i> %s', $title);
     }
 
     public function getSender($flat = false)
@@ -80,7 +93,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     protected function renderContent(): string
     {
         $content = str_replace('-&gt;', '->', $this->content);
-        $content = nl2br($content);
+        // $content = nl2br($content);
 
         return ViewService::render($content, $this->event->getSendableVariables());
     }
@@ -88,5 +101,10 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     public function getAttachments()
     {
         return [];
+    }
+
+    public function getAvailableTemplateVariables()
+    {
+        return App::make($this->event_type)->getSendableVariables();
     }
 }

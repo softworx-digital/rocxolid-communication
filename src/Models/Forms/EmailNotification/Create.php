@@ -25,9 +25,13 @@ class Create extends RocXolidAbstractCrudForm
             return __($signature);
         });
 
-        $fields['recipient_email']['type'] = Tagsinput::class;
-        $fields['cc_recipient_email']['type'] = Tagsinput::class;
-        $fields['bcc_recipient_email']['type'] = Tagsinput::class;
+        unset($fields['sender_email']);
+        unset($fields['sender_name']);
+        unset($fields['recipient_email']);
+        unset($fields['cc_recipient_email']);
+        unset($fields['bcc_recipient_email']);
+        unset($fields['subject']);
+        unset($fields['content']);
 
         return $fields;
     }

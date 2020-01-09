@@ -17,7 +17,6 @@ class Update extends RocXolidAbstractCrudForm
 
     protected function adjustFieldsDefinition($fields)
     {
-        //$fields['content']['type'] = WysiwygTextarea::class;
         $fields['event_type']['type'] = CollectionSelect::class;
         $fields['event_type']['options']['placeholder']['title'] = 'event_type';
         $fields['event_type']['options']['validation']['rules'][] = 'required';
@@ -29,6 +28,14 @@ class Update extends RocXolidAbstractCrudForm
         $fields['recipient_email']['type'] = Tagsinput::class;
         $fields['cc_recipient_email']['type'] = Tagsinput::class;
         $fields['bcc_recipient_email']['type'] = Tagsinput::class;
+
+        $fields['subject']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->id);
+
+        $fields['content']['type'] = WysiwygTextarea::class;
+        $fields['content']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->id);
+
+        // unset($fields['subject']);
+        // unset($fields['content']);
 
         return $fields;
     }

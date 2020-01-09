@@ -6,6 +6,7 @@ use Softworx\RocXolid\Repositories\AbstractCrudRepository;
 use Softworx\RocXolid\Repositories\Columns\Type\Text;
 use Softworx\RocXolid\Repositories\Columns\Type\Flag;
 use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+use Softworx\RocXolid\Repositories\Columns\Type\ButtonAnchor;
 
 class Repository extends AbstractCrudRepository
 {
@@ -32,6 +33,14 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         */
+        'is_enabled' => [
+            'type' => Flag::class,
+            'options' => [
+                'label' => [
+                    'title' => 'is_enabled'
+                ],
+            ],
+        ],
         'web_id' => [
             'type' => ModelRelation::class,
             'options' => [
@@ -61,6 +70,7 @@ class Repository extends AbstractCrudRepository
                         'class' => 'text-center',
                     ],
                 ],
+                // 'translate' => ..., // adjusted
             ],
         ],
         'sender_email' => [
@@ -110,13 +120,63 @@ class Repository extends AbstractCrudRepository
                 ],
             ],
         ],
-        'is_enabled' => [
-            'type' => Flag::class,
+    ];
+
+    protected $buttons = [
+        'edit' => [
+            'type' => ButtonAnchor::class,
             'options' => [
                 'label' => [
-                    'title' => 'is_enabled'
+                    'icon' => 'fa fa-pencil',
                 ],
+                'attributes' => [
+                    'class' => 'btn btn-primary btn-sm margin-right-no',
+                    'title-key' => 'edit',
+                ],
+                'controller-method' => 'edit',
+                'permissions-method-group' => 'write',
             ],
-        ],
+        ],/*
+        'compose' => [
+            'type' => ButtonAnchor::class,
+            'options' => [
+                'label' => [
+                    'icon' => 'fa fa-object-group',
+                ],
+                'attributes' => [
+                    'class' => 'btn btn-primary btn-sm margin-right-no',
+                    'title-key' => 'compose',
+                ],
+                'controller-method' => 'edit',
+                'controller-method-params' => [
+                    '_section' => 'composition',
+                ],
+                'permissions-method-group' => 'write',
+            ],
+        ],*//*
+        'delete-ajax' => [
+            'type' => ButtonAnchor::class,
+            'options' => [
+                'ajax' => true,
+                'label' => [
+                    'icon' => 'fa fa-trash',
+                ],
+                'attributes' => [
+                    'class' => 'btn btn-danger btn-sm margin-right-no',
+                    'title-key' => 'delete',
+                ],
+                'controller-method' => 'destroyConfirm',
+                'permissions-method-group' => 'write',
+            ],
+        ],*/
     ];
+
+    protected function adjustColumnsDefinition($columns)
+    {
+        $columns['event_type']['options']['translate'] = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+            return __($signature);
+        });
+
+        return $columns;
+    }
 }
