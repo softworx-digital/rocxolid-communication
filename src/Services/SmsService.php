@@ -17,16 +17,13 @@ class SmsService
 
     public function send()
     {
-        if (!empty($this->sendable->getContent()))
-        {
+        if (!empty($this->sendable->getContent())) {
             $success = $this->sendToProvider();
 
             $this->sendable->logActivity($success);
 
             return $success;
-        }
-        else
-        {
+        } else {
             throw new \RuntimeException('Message is empty, cannot send!');
         }
     }
@@ -47,14 +44,11 @@ class SmsService
         // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
         $response = @file_get_contents(sprintf(self::SERVICE_URL, $this->sendable->getSender(), $this->sendable->getRecipient(), urlencode($this->sendable->getContent())));
 
-        if ($response)
-        {
+        if ($response) {
             list($status, $id) = explode('|', $response);
 
             return ($status == 'ok');
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

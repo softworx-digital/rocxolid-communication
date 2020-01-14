@@ -51,7 +51,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     public function getTitle()
     {
         if ($this->event_type) {
-            $title = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+            $title = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
                 return __($signature);
             })->get($this->event_type);
         } else {
@@ -63,8 +63,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
 
     public function getSender($flat = false)
     {
-        if ($flat)
-        {
+        if ($flat) {
             return sprintf('%s <%s>', $this->sender_name, $this->sender_email);
         }
 

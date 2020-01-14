@@ -21,7 +21,7 @@ class Update extends RocXolidAbstractCrudForm
         $fields['event_type']['options']['placeholder']['title'] = 'event_type';
         $fields['event_type']['options']['validation']['rules'][] = 'required';
         $fields['event_type']['options']['validation']['rules'][] = 'class_exists';
-        $fields['event_type']['options']['collection'] = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+        $fields['event_type']['options']['collection'] = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
             return __($signature);
         });
 

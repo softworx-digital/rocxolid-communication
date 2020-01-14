@@ -23,41 +23,32 @@ trait FormatsPhoneNumber
 
         $phone_number = str_replace('+', '', $phone_number);
 
-        if (substr($phone_number, 0, 1) == '0')
-        {
+        if (substr($phone_number, 0, 1) == '0') {
             $phone_number = substr($phone_number, 1);
         }
 
-        if (substr($phone_number, 0, 1) == '0')
-        {
+        if (substr($phone_number, 0, 1) == '0') {
             $phone_number = substr($phone_number, 1);
         }
 
-        if (strlen($phone_number) < 9)
-        {
+        if (strlen($phone_number) < 9) {
             //throw new \InvalidArgumentException(sprintf('Invalid phone number to format [%s] in [%s]', $phone_number, get_class($this)));
         }
-        if ((strlen($phone_number) >= 9) && (strlen($phone_number) < 12))
-        {
+        if ((strlen($phone_number) >= 9) && (strlen($phone_number) < 12)) {
             $phone_number = sprintf('%s%s', $country ? $country->calling_code : $this->getPhoneNumberFormatterShop()->country->calling_code, substr($phone_number, -9));
-        }
-        elseif (strlen($phone_number) > 12)
-        {
+        } elseif (strlen($phone_number) > 12) {
             //$phone_number = substr($phone_number, -12);
         }
 
-        if ($divide_length)
-        {
+        if ($divide_length) {
             $phone_number = str_split($phone_number, $divide_length);
         }
 
-        if ($divider)
-        {
+        if ($divider) {
             $phone_number = str_replace(' ', $divider, $phone_number);
         }
 
-        if ($prefix)
-        {
+        if ($prefix) {
             $phone_number = sprintf('%s%s', $prefix, $phone_number);
         }
 
@@ -66,23 +57,16 @@ trait FormatsPhoneNumber
 
     public function getPhoneNumberFormatterShop()
     {
-        if (is_null($this->_phone_number_formatter_shop))
-        {
-            if (method_exists($this, 'shop'))
-            {
+        if (is_null($this->_phone_number_formatter_shop)) {
+            if (method_exists($this, 'shop')) {
                 $this->_phone_number_formatter_shop = $this->shop;
-            }
-            elseif (method_exists($this, 'order'))
-            {
+            } elseif (method_exists($this, 'order')) {
                 $this->_phone_number_formatter_shop = $this->order->shop;
-            }
-            elseif (method_exists($this, 'invoice'))
-            {
+            } elseif (method_exists($this, 'invoice')) {
                 $this->_phone_number_formatter_shop = $this->invoice->shop;
             }
 
-            if (is_null($this->_phone_number_formatter_shop))
-            {
+            if (is_null($this->_phone_number_formatter_shop)) {
                 throw new \RuntimeException(sprintf('Cannot resolve shop for [%s]', get_class($this)));
             }
         }

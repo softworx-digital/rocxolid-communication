@@ -173,7 +173,7 @@ class Repository extends AbstractCrudRepository
 
     protected function adjustColumnsDefinition($columns)
     {
-        $columns['event_type']['options']['translate'] = collect(config('rocXolid.communication.events'))->map(function($signature, $event_class) {
+        $columns['event_type']['options']['translate'] = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
             return __($signature);
         });
 

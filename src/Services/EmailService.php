@@ -16,17 +16,14 @@ class EmailService
 
     public function send()
     {
-        if (!empty($this->sendable->getContent()))
-        {
+        if (!empty($this->sendable->getContent())) {
             $success = $this->sendToProvider();
 
             $this->sendable->logActivity($success);
             $this->sendable->setStatus($success);
 
             return $this->sendable;
-        }
-        else
-        {
+        } else {
             throw new \RuntimeException('Message is empty, cannot send!');
         }
     }
@@ -34,8 +31,7 @@ class EmailService
     private function sendToProvider()
     {
         // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
-        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function ($message)
-        {
+        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function ($message) {
             $sender = $this->sendable->getSender();
 
             $message->subject($this->sendable->getSubject());
@@ -57,8 +53,7 @@ class EmailService
                 });
             }
 
-            foreach ($this->sendable->getAttachments() as $file)
-            {
+            foreach ($this->sendable->getAttachments() as $file) {
                 $message->attach($file);
             }
         });

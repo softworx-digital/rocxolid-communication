@@ -17,8 +17,8 @@ class NotificationSubscriber
     {
         $configured = collect(config('rocXolid.communication.events'))->keys();
 
-        $configured->each(function($event_class) use ($events) {
-            $events->listen($event_class, function($event) {
+        $configured->each(function ($event_class) use ($events) {
+            $events->listen($event_class, function ($event) {
                 $this->notify($event);
             });
         });
@@ -35,7 +35,7 @@ class NotificationSubscriber
     {
         $emails = new Collection();
 
-        $this->getEmails($event)->each(function($email) use ($event, $emails) {
+        $this->getEmails($event)->each(function ($email) use ($event, $emails) {
             $email->setEvent($event);
             $emails->push((new EmailService($email))->send());
         });

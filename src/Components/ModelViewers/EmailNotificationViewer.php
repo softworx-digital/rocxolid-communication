@@ -6,5 +6,4 @@ use Softworx\RocXolid\Communication\Components\ModelViewers\CrudModelViewer;
 
 class EmailNotificationViewer extends CrudModelViewer
 {
-
 }

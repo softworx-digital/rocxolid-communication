@@ -116,8 +116,7 @@ class ModelRepository extends AbstractCrudRepository
 
     public function init(): Repository
     {
-        if ($this->getRequest()->has('log_model'))
-        {
+        if ($this->getRequest()->has('log_model')) {
             $this->setModelRelation($this->getRequest()->get('model_relation', null));
 
             $relation = CommunicationLog::make()->{$this->getModelRelation()}()->getRelation();
@@ -138,8 +137,7 @@ class ModelRepository extends AbstractCrudRepository
 
     public function getModelRelation(): string
     {
-        if (is_null($this->model_relation))
-        {
+        if (is_null($this->model_relation)) {
             throw new \RuntimeException(sprintf('Model relation not yet set to [%s]', get_class($this)));
         }
 
@@ -155,8 +153,7 @@ class ModelRepository extends AbstractCrudRepository
 
     public function getLogModel()
     {
-        if (is_null($this->log_model))
-        {
+        if (is_null($this->log_model)) {
             throw new \RuntimeException(sprintf('Log model not yet set to [%s]', get_class($this)));
         }
 
