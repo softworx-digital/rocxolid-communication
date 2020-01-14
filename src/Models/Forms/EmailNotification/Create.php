@@ -25,13 +25,13 @@ class Create extends RocXolidAbstractCrudForm
             return __($signature);
         });
 
-        unset($fields['sender_email']);
-        unset($fields['sender_name']);
+        // unset($fields['sender_email']);
+        // unset($fields['sender_name']);
         unset($fields['recipient_email']);
         unset($fields['cc_recipient_email']);
         unset($fields['bcc_recipient_email']);
-        unset($fields['subject']);
-        unset($fields['content']);
+        // unset($fields['subject']);
+        // unset($fields['content']);
 
         return $fields;
     }
