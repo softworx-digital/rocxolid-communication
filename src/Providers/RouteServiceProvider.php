@@ -23,7 +23,8 @@ class RouteServiceProvider extends IlluminateServiceProvider
     public function boot()
     {
         $this
-            ->load($this->app->router);
+            ->load($this->app->router)
+            ->mapRouteModels($this->app->router);
 
         return $this;
     }
@@ -52,9 +53,24 @@ class RouteServiceProvider extends IlluminateServiceProvider
                 'namespace' => 'CommunicationLog',
                 'prefix' => 'communication-log',
             ], function ($router) {
-                $router->get('/model/{relation}/{id}', 'Controller@modelLog');
+                $router->get('/model/{relation}/{communication_log}', 'Controller@modelLog');
             });
         });
+
+        return $this;
+    }
+
+    /**
+     * Define the route bindings for URL params.
+     *
+     * @param  \Illuminate\Routing\Router $router Router to be used for routing.
+     * @return \Illuminate\Support\ServiceProvider
+     */
+    private function mapRouteModels(Router $router): IlluminateServiceProvider
+    {
+        $router->model('email_notification', \Softworx\RocXolid\Communication\Models\EmailNotification::class);
+        $router->model('sms_notification', \Softworx\RocXolid\Communication\Models\SmsNotification::class);
+        $router->model('communication_log', \Softworx\RocXolid\Communication\Models\CommunicationLog::class);
 
         return $this;
     }
