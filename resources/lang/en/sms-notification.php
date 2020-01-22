@@ -3,7 +3,6 @@
 return [
     'column' => [
         'event_type' => 'Event type',
-        'is_enabled' => 'Enabled',
         'sender' => 'Sender',
         'recipient_phone_number' => 'Recipient phone no.',
         'subject' => 'Subject',
@@ -12,7 +11,6 @@ return [
     ],
     'field' => [
         'event_type' => 'Event type',
-        'is_enabled' => 'Enabled',
         'sender' => 'Sender',
         'recipient_phone_number' => 'Recipient phone no.',
         'subject' => 'Subject',

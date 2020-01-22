@@ -3,7 +3,6 @@
 return [
     'column' => [
         'event_type' => 'Event type',
-        'is_enabled' => 'Enabled',
         'sender_email' => 'Sender e-mail address',
         'sender_name' => 'Sender name',
         'recipient_email' => 'Recipient e-mail address',
@@ -15,7 +14,6 @@ return [
     ],
     'field' => [
         'event_type' => 'Event type',
-        'is_enabled' => 'Enabled',
         'sender_email' => 'Sender e-mail address',
         'sender_name' => 'Sender name',
         'recipient_email' => 'Recipient e-mail address',

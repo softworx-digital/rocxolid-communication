@@ -3,7 +3,6 @@
 return [
     'column' => [
         'event_type' => 'Akcia',
-        'is_enabled' => 'Aktivované',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',
         'recipient_email' => 'e-mail prijímateľa',
@@ -15,7 +14,6 @@ return [
     ],
     'field' => [
         'event_type' => 'Akcia',
-        'is_enabled' => 'Aktivované',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',
         'recipient_email' => 'e-mail prijímateľa',

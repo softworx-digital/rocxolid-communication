@@ -133,8 +133,8 @@ class Repository extends AbstractCrudRepository
                     'class' => 'btn btn-primary btn-sm margin-right-no',
                     'title-key' => 'edit',
                 ],
-                'controller-method' => 'edit',
-                'permissions-method-group' => 'write',
+                'policy-ability' => 'edit',
+                'policy-ability-group' => 'write',
             ],
         ],/*
         'compose' => [
@@ -147,11 +147,11 @@ class Repository extends AbstractCrudRepository
                     'class' => 'btn btn-primary btn-sm margin-right-no',
                     'title-key' => 'compose',
                 ],
-                'controller-method' => 'edit',
-                'controller-method-params' => [
+                'policy-ability' => 'edit',
+                'policy-ability-params' => [
                     '_section' => 'composition',
                 ],
-                'permissions-method-group' => 'write',
+                'policy-ability-group' => 'write',
             ],
         ],*//*
         'delete-ajax' => [
@@ -165,8 +165,8 @@ class Repository extends AbstractCrudRepository
                     'class' => 'btn btn-danger btn-sm margin-right-no',
                     'title-key' => 'delete',
                 ],
-                'controller-method' => 'destroyConfirm',
-                'permissions-method-group' => 'write',
+                'policy-ability' => 'destroyConfirm',
+                'policy-ability-group' => 'write',
             ],
         ],*/
     ];

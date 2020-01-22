@@ -3,7 +3,6 @@
 return [
     'column' => [
         'event_type' => 'Akcia',
-        'is_enabled' => 'Aktivované',
         'sender' => 'Odosielateľ',
         'recipient_phone_number' => 'Tel. prijímateľa',
         'subject' => 'Predmet',
@@ -12,7 +11,6 @@ return [
     ],
     'field' => [
         'event_type' => 'Akcia',
-        'is_enabled' => 'Aktivované',
         'sender' => 'Odosielateľ',
         'recipient_phone_number' => 'Tel. prijímateľa',
         'subject' => 'Predmet',

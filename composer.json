@@ -30,6 +30,12 @@
             ],
             "aliases": {
             }
+        },
+        "rocXolid": {
+            "title": {
+                "en": "Communication",
+                "sk": "Komunikácia"
+            }
         }
     }
 }
