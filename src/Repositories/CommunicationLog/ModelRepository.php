@@ -2,12 +2,17 @@
 
 namespace Softworx\RocXolid\Communication\Repositories\CommunicationLog;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+// rocXolid repositories
 use Softworx\RocXolid\Repositories\AbstractCrudRepository;
+// rocXolid repository contracts
 use Softworx\RocXolid\Repositories\Contracts\Repository;
+// rocXolid repository column types
 use Softworx\RocXolid\Repositories\Columns\Type\Text;
 use Softworx\RocXolid\Repositories\Columns\Type\Flag;
 use Softworx\RocXolid\Repositories\Columns\Type\DateTime;
 use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+// rocXolid communication models
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
 
 class ModelRepository extends AbstractCrudRepository
@@ -160,7 +165,7 @@ class ModelRepository extends AbstractCrudRepository
         return $this->log_model;
     }
 
-    protected function applyIntenalFilters()
+    protected function applyIntenalFilters(): EloquentBuilder
     {
         $query = $this->getQuery()
             ->where('model_id', $this->getLogModel()->id)
