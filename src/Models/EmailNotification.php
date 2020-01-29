@@ -27,10 +27,6 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     use UserGroupAssociatedWeb;
     use SendableTrait;
 
-    protected $guarded = [
-        'id'
-    ];
-
     protected $fillable = [
         'event_type',
         'is_enabled',

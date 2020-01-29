@@ -10,10 +10,6 @@ class CommunicationLog extends AbstractCrudModel
 {
     use SoftDeletes;
 
-    protected $guarded = [
-        'id'
-    ];
-
     protected $fillable = [
         'event',
         'sender',

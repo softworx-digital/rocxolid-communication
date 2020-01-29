@@ -11,10 +11,6 @@ class SmsNotification extends AbstractCrudModel
     use SoftDeletes;
     use SendableTrait;
 
-    protected $guarded = [
-        'id'
-    ];
-
     protected $fillable = [
         'event_type',
         'sender',
