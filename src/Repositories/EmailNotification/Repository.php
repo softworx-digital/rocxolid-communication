@@ -41,6 +41,14 @@ class Repository extends AbstractCrudRepository
                 ],
             ],
         ],
+        'is_can_be_turned_off' => [
+            'type' => Flag::class,
+            'options' => [
+                'label' => [
+                    'title' => 'is_can_be_turned_off'
+                ],
+            ],
+        ],
         'web_id' => [
             'type' => ModelRelation::class,
             'options' => [

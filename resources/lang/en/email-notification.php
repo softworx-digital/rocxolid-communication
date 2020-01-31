@@ -2,6 +2,7 @@
 
 return [
     'column' => [
+        'is_can_be_turned_off' => 'Offable',
         'event_type' => 'Event type',
         'sender_email' => 'Sender e-mail address',
         'sender_name' => 'Sender name',
@@ -13,6 +14,7 @@ return [
         'description' => 'Description - internal note',
     ],
     'field' => [
+        'is_can_be_turned_off' => 'Can be turned off by user',
         'event_type' => 'Event type',
         'sender_email' => 'Sender e-mail address',
         'sender_name' => 'Sender name',

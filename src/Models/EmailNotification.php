@@ -30,6 +30,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     protected $fillable = [
         'event_type',
         'is_enabled',
+        'is_can_be_turned_off',
         'sender_email',
         'sender_name',
         'recipient_email',

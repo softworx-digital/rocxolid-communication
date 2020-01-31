@@ -2,6 +2,7 @@
 
 return [
     'column' => [
+        'is_can_be_turned_off' => 'Vypínateľná',
         'event_type' => 'Akcia',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',
@@ -13,6 +14,7 @@ return [
         'description' => 'Popis',
     ],
     'field' => [
+        'is_can_be_turned_off' => 'Môže byť vypnutá používateľom',
         'event_type' => 'Akcia',
         'sender_email' => 'e-mail odosielateľa',
         'sender_name' => 'Meno odosielateľa',

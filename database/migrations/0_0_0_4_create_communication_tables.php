@@ -37,6 +37,7 @@ class CreateCommunicationTables extends Migration
             $table->increments('id')->unique()->index();
             $table->unsignedInteger('web_id')->nullable();
             $table->boolean('is_enabled')->default(0);
+            $table->boolean('is_can_be_turned_off')->default(1);
             $table->string('event_type');
             $table->string('sender_email');
             $table->string('sender_name');
