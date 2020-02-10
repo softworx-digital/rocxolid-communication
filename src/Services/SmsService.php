@@ -2,7 +2,7 @@
 
 namespace Softworx\RocXolid\Communication\Services;
 
-use Softworx\RocXolid\Communication\Contracts\Sendable;
+use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
 class SmsService
 {

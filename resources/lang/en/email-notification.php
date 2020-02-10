@@ -31,7 +31,22 @@ return [
             'plural' => 'e-mail notifications',
         ],
     ],
+    'button' => [
+        'send-test' => 'Send testing e-mail',
+    ],
+    'table-button' => [
+        'send-test' => 'Send testing e-mail',
+    ],
+    'action' => [
+        'sendTestNotificationConfirm' => 'Sending testing e-mail',
+    ],
     'placeholder' => [
+        'email' => 'Address to send e-mail',
         'event_type' => 'Event, upon which the e-mail will be sent',
+        'sending-success' => 'E-mail was successfully sent',
+        'sending-failure' => 'There was a problem sending e-mail, check SMTP server credentials',
+    ],
+    'permissions' => [
+        'sendTestNotification' => 'Sending test notifiactions',
     ],
 ];

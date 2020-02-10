@@ -3,61 +3,101 @@
 namespace Softworx\RocXolid\Communication\Models\Traits;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+// rocXolid communication contracts
 use Softworx\RocXolid\Communication\Contracts\CommunicationLoggable;
+// rocXolid communication event contracts
+use Softworx\RocXolid\Communication\Events\Contracts\Sendable as SendableEvent;
+// rocXolid communication model contracts
+use Softworx\RocXolid\Communication\Models\Contracts\Sendable as SendableContract;
+// rocXolid communication models
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
 
+/**
+ * Trait to enable model to be sent.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Admin
+ * @version 1.0.0
+ */
 trait Sendable
 {
-    protected $_rendered_content = null;
+    /**
+     * @var string|null
+     */
+    protected $rendered_content = null;
 
+    /**
+     * @var string|null
+     */
     protected $status = null;
 
+    /**
+     * @var \Softworx\RocXolid\Communication\Events\Contracts\Sendable|null
+     */
     protected $event = null;
 
-    public function setEvent($event)
+    /**
+     * {@inheritDoc}
+     */
+    public function setEvent(SendableEvent $event): SendableContract
     {
         $this->event = $event;
 
         return $this;
     }
 
-    public function setStatus($status)
+    /**
+     * {@inheritDoc}
+     */
+    public function setStatus(bool $status): SendableContract
     {
         $this->status = $status;
 
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSender($flat = false): string
     {
         return $this->sender;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getContent(): string
     {
-        if (is_null($this->_rendered_content)) {
-            $this->_rendered_content = $this->renderContent();
+        if (is_null($this->rendered_content)) {
+            $this->rendered_content = $this->renderContent();
         }
 
-        return $this->_rendered_content;
+        return $this->rendered_content;
     }
 
-    public function communicationLogs()
+    /**
+     * {@inheritDoc}
+     */
+    public function getAvailableTemplateVariables(): array
     {
-        return $this->morphMany(CommunicationLog::class, 'sendable');
+        return app($this->event_type)->getSendableVariables();
     }
 
-    public function getEvent()
+    /**
+     * {@inheritDoc}
+     */
+    public function getEvent(): SendableEvent
     {
         return $this->event;
     }
 
-    public function getSendingModel($event)
-    {
-        return null;
-    }
-
-    public function logActivity($success, $error_description = null)
+    /**
+     * {@inheritDoc}
+     */
+    public function logActivity(bool $success, ?string $error_description = null): CommunicationLog
     {
         $log = new CommunicationLog([
             'event' => get_class($this->getEvent()),
@@ -76,5 +116,15 @@ trait Sendable
         }
 
         return $log;
+    }
+
+    /**
+     * Relation to log the communication.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function communicationLogs(): MorphMany
+    {
+        return $this->morphMany(CommunicationLog::class, 'sendable');
     }
 }

@@ -26,4 +26,7 @@ return [
     'placeholder' => [
         'event_type' => 'Event, upon which the SMS will be sent',
     ],
+    'permissions' => [
+        'sendTestNotification' => 'Sending test notifiactions',
+    ],
 ];

@@ -3,7 +3,7 @@
 namespace Softworx\RocXolid\Communication\Services;
 
 use Mail;
-use Softworx\RocXolid\Communication\Contracts\Sendable;
+use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
 class EmailService
 {
@@ -30,7 +30,6 @@ class EmailService
 
     private function sendToProvider()
     {
-        // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
         Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function ($message) {
             $sender = $this->sendable->getSender();
 

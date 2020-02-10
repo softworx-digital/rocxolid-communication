@@ -26,4 +26,7 @@ return [
     'placeholder' => [
         'event_type' => 'Akcia, na základe ktorej sa odošle SMS',
     ],
+    'permissions' => [
+        'sendTestNotification' => 'Posielanie testovacích notifikácií',
+    ],
 ];

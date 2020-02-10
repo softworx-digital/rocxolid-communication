@@ -144,6 +144,21 @@ class Repository extends AbstractCrudRepository
                 'policy-ability' => 'update',
                 'action' => 'edit',
             ],
+        ],
+        'send-test' => [
+            'type' => ButtonAnchor::class,
+            'options' => [
+                'ajax' => true,
+                'label' => [
+                    'icon' => 'fa fa-paper-plane-o',
+                ],
+                'attributes' => [
+                    'class' => 'btn btn-info btn-sm margin-right-no',
+                    'title-key' => 'send-test',
+                ],
+                'policy-ability' => 'sendTestNotification',
+                'action' => 'sendTestNotificationConfirm',
+            ],
         ],/*
         'compose' => [
             'type' => ButtonAnchor::class,
@@ -161,8 +176,8 @@ class Repository extends AbstractCrudRepository
                     '_section' => 'composition',
                 ],
             ],
-        ],*//*
-        'delete-ajax' => [
+        ],*/
+        'delete' => [
             'type' => ButtonAnchor::class,
             'options' => [
                 'ajax' => true,
@@ -176,7 +191,7 @@ class Repository extends AbstractCrudRepository
                 'policy-ability' => 'delete',
                 'action' => 'destroyConfirm',
             ],
-        ],*/
+        ],
     ];
 
     protected function adjustColumnsDefinition($columns)

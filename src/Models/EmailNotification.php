@@ -2,7 +2,6 @@
 
 namespace Softworx\RocXolid\Communication\Models;
 
-use App;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // rocXolid services
@@ -10,7 +9,7 @@ use Softworx\RocXolid\Services\ViewService;
 // rocXolid models
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid communication model contracts
-use Softworx\RocXolid\Communication\Contracts\Sendable;
+use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 // rocXolid communication model traits
 use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
 // rocXolid common model traits
@@ -18,13 +17,17 @@ use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
 use Softworx\RocXolid\Common\Models\Traits\HasWeb;
 
 /**
+ * Sendable e-mail notification.
  *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Admin
+ * @version 1.0.0
  */
 class EmailNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
     use HasWeb;
-    use UserGroupAssociatedWeb;
+    // use UserGroupAssociatedWeb; // @todo: hotfixed
     use SendableTrait;
 
     protected $fillable = [
@@ -45,6 +48,9 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         // 'web',
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function getTitle()
     {
         if ($this->event_type) {
@@ -58,6 +64,9 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         return sprintf('<i class="fa fa-envelope-o mr-10"></i> %s', $title);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSender($flat = false)
     {
         if ($flat) {
@@ -70,37 +79,56 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSubject(): string
     {
         return ViewService::render($this->subject, $this->event->getSendableVariables());
     }
 
-    public function getRecipients(): Collection
+    /**
+     * {@inheritDoc}
+     */
+    public function setRecipient(string $recipient): Sendable
     {
-        $recipients = $this->event->getRecipients();
+        $this->recipient_email = $recipient;
 
-        if ($this->recipient_email) {
-            $recipients->push($this->recipient_email);
-        }
-
-        return $recipients;
+        return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getRecipients(): Collection
+    {
+        if ($this->recipient_email) {
+            return collect($this->recipient_email);
+        } else {
+            return $this->event->getRecipients();
+        }
+    }
+
+    /**
+     * Get notification attachments.
+     *
+     * @return array
+     */
+    public function getAttachments(): array
+    {
+        return [];
+    }
+
+    /**
+     * Compile the content as blade template.
+     *
+     * @return string
+     */
     protected function renderContent(): string
     {
         $content = str_replace('-&gt;', '->', $this->content);
         // $content = nl2br($content);
 
         return ViewService::render($content, $this->event->getSendableVariables());
-    }
-
-    public function getAttachments()
-    {
-        return [];
-    }
-
-    public function getAvailableTemplateVariables()
-    {
-        return App::make($this->event_type)->getSendableVariables();
     }
 }

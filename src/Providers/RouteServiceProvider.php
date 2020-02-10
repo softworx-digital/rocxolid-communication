@@ -50,6 +50,22 @@ class RouteServiceProvider extends IlluminateServiceProvider
             CrudRouterService::create('communication-log', \CommunicationLog\Controller::class);
 
             $router->group([
+                'namespace' => 'EmailNotification',
+                'prefix' => 'email-notification',
+            ], function ($router) {
+                $router->get('/send-test-notification/{email_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
+                $router->post('/send-test-notification/{email_notification}', 'Controller@sendTestNotification')->name('send-test');
+            });
+
+            $router->group([
+                'namespace' => 'SmsNotification',
+                'prefix' => 'sms-notification',
+            ], function ($router) {
+                $router->get('/send-test-notification/{sms_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
+                $router->post('/send-test-notification/{sms_notification}', 'Controller@sendTestNotification')->name('send-test');
+            });
+
+            $router->group([
                 'namespace' => 'CommunicationLog',
                 'prefix' => 'communication-log',
             ], function ($router) {
