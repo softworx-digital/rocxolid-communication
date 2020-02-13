@@ -29,10 +29,10 @@ class Update extends RocXolidAbstractCrudForm
         $fields['cc_recipient_email']['type'] = Tagsinput::class;
         $fields['bcc_recipient_email']['type'] = Tagsinput::class;
 
-        $fields['subject']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->id);
+        $fields['subject']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->getKey());
 
         $fields['content']['type'] = WysiwygTextarea::class;
-        $fields['content']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->id);
+        $fields['content']['options']['validation']['rules'][] = sprintf('blade_template:%s,%s', get_class($this->getModel()), $this->getModel()->getKey());
 
         // unset($fields['subject']);
         // unset($fields['content']);

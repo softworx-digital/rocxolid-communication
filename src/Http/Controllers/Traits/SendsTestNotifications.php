@@ -94,7 +94,7 @@ trait SendsTestNotifications
             if ($sent = $this->sendNotification($model, $email)) {
                 $this->response
                     ->notifySuccess($form_component->translate('text.sending-success'))
-                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $this->getModel()->id));
+                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $this->getModel()->getKey()));
             } else {
                 $this->response
                     ->notifyError($form_component->translate('text.sending-failure'));

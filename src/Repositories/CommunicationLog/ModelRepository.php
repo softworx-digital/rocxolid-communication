@@ -168,7 +168,7 @@ class ModelRepository extends AbstractCrudRepository
     protected function applyIntenalFilters(): EloquentBuilder
     {
         $query = $this->getQuery()
-            ->where('model_id', $this->getLogModel()->id)
+            ->where('model_id', $this->getLogModel()->getKey())
             ->where('model_type', get_class($this->getLogModel()));
 
         return $query;
