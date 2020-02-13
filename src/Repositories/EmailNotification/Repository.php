@@ -5,6 +5,7 @@ namespace Softworx\RocXolid\Communication\Repositories\EmailNotification;
 use Softworx\RocXolid\Repositories\AbstractCrudRepository;
 use Softworx\RocXolid\Repositories\Columns\Type\Text;
 use Softworx\RocXolid\Repositories\Columns\Type\Flag;
+use Softworx\RocXolid\Repositories\Columns\Type\SwitchFlag;
 use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
 use Softworx\RocXolid\Repositories\Columns\Type\ButtonAnchor;
 
@@ -34,7 +35,7 @@ class Repository extends AbstractCrudRepository
         ],
         */
         'is_enabled' => [
-            'type' => Flag::class,
+            'type' => SwitchFlag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_enabled'
