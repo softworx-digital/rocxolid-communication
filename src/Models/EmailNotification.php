@@ -27,7 +27,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
     use HasWeb;
-    // use UserGroupAssociatedWeb; // @todo: hotfixed
+    // use UserGroupAssociatedWeb; // @todo: "hotfixed"
     use SendableTrait;
 
     protected $fillable = [
