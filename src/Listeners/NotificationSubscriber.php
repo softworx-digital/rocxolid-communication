@@ -8,6 +8,8 @@ use Illuminate\Events\Dispatcher;
 use Softworx\RocXolid\Communication\Services\EmailService;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\EmailNotification;
+// rocXolid communication event contracts
+use Softworx\RocXolid\Communication\Events\Contracts\Sendable;
 
 /**
  * Communication events listener.
