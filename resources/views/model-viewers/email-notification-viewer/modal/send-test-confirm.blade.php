@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">{{ $component->translate('model.title.singular') }} <small>{{ $component->translate(sprintf('action.%s', $route_method)) }}</small></h4>
             </div>
-            {!! $component->getFormComponent()->render('modal') !!}
+            {!! $component->getFormComponent()->render('modal.default') !!}
         </div>
     </div>
 </div>

@@ -33,8 +33,8 @@ return [
     ],
     'button' => [
         'send-test' => 'Poslať testovací e-mail',
-        'submit_new' => 'Uložiť a vytvoriť novú',
-        'submit_ajax_new' => 'Uložiť a vytvoriť novú',
+        'submit-new' => 'Uložiť a vytvoriť novú',
+        'submit-new' => 'Uložiť a vytvoriť novú',
     ],
     'table-button' => [
         'send-test' => 'Poslať testovací e-mail',
