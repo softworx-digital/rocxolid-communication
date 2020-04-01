@@ -42,14 +42,14 @@
         var $input = null;
 
         $('{{ $component->getFormComponent()->getDomIdHash('fieldset') }}')
-            .on('focus', ':input', function(e) {
+            .on('focus', ':input', function (e) {
                 $input = $(this);
             })
-            .on('summernote.focus', 'textarea.wysiwyg', function(e) {
+            .on('summernote.focus', 'textarea.wysiwyg', function (e) {
                 $input = $(this);
             });
 
-        $('.list-group-item .btn').on('click', function() {
+        $('.list-group-item .btn').on('click', function () {
             var $node = $('<span>');
             $node.text('\{\{ ' + $(this).attr('data-add-html') + ' \}\}');
 
