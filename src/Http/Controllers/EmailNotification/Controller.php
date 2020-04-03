@@ -31,7 +31,7 @@ class Controller extends AbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected static $model_class = EmailNotification::class;
+
 
     /**
      * {@inheritDoc}

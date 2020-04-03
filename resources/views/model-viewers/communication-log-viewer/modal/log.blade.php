@@ -6,7 +6,7 @@
                 <h4 class="modal-title">{{ $log_model->getTitle() }} <small>Log správ</small></h4>
             </div>
             <div class="modal-body text-center">
-                {!! $repository_component->render('modal') !!}
+                {!! $table_component->render('modal') !!}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-chevron-left margin-right-10"></i>Späť</button>

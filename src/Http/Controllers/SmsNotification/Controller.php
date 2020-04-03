@@ -25,7 +25,7 @@ class Controller extends AbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected static $model_class = SmsNotification::class;
+
 
     /**
      * {@inheritDoc}

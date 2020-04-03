@@ -14,7 +14,7 @@ use Softworx\RocXolid\Communication\Components\ModelViewers\CommunicationLogView
 
 class Controller extends AbstractCrudController
 {
-    protected static $model_class = CommunicationLog::class;
+
 
     protected static $repository_class = Repository::class;
 
@@ -44,10 +44,10 @@ class Controller extends AbstractCrudController
             ->setLogModel($log_model)
             ->setModelRelation($relation);
 
-        $repository_component = (new CrudTableComponent())->setRepository($repository);
+        $table_component = (new CrudTableComponent())->setRepository($repository);
 
         return $this->response
-            ->modal($model_viewer_component->fetch('modal.log', [ 'log_model' => $log_model, 'repository_component' => $repository_component ]))
+            ->modal($model_viewer_component->fetch('modal.log', [ 'log_model' => $log_model, 'table_component' => $table_component ]))
             ->get();
     }
 }

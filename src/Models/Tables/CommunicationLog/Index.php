@@ -1,13 +1,13 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\CommunicationLog;
+namespace Softworx\RocXolid\Communication\Models\Tables\CommunicationLog;
 
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+use Softworx\RocXolid\Tables\Columns\Type\Text;
+use Softworx\RocXolid\Tables\Columns\Type\Flag;
+use Softworx\RocXolid\Tables\Columns\Type\ModelRelation;
 
-class Repository extends AbstractCrudRepository
+class Index extends AbstractCrudTable
 {
     protected static $translation_param = 'communication-log';
 

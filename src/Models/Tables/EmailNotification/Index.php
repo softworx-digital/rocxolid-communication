@@ -1,15 +1,18 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\EmailNotification;
+namespace Softworx\RocXolid\Communication\Models\Tables\EmailNotification;
 
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\SwitchFlag;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
-use Softworx\RocXolid\Repositories\Columns\Type\ButtonAnchor;
+// rocXolid tables
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+// rocXolid table columns
+use Softworx\RocXolid\Tables\Columns\Type\Text;
+use Softworx\RocXolid\Tables\Columns\Type\Flag;
+use Softworx\RocXolid\Tables\Columns\Type\SwitchFlag;
+use Softworx\RocXolid\Tables\Columns\Type\ModelRelation;
+// rocXolid table buttons
+use Softworx\RocXolid\Tables\Buttons\Type\ButtonAnchor;
 
-class Repository extends AbstractCrudRepository
+class Index extends AbstractCrudTable
 {
     protected static $translation_param = 'email-system-notification';
 
