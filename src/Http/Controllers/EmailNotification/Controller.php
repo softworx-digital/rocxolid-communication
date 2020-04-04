@@ -10,8 +10,6 @@ use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as CrudModelViewer
 use Softworx\RocXolid\Communication\Http\Controllers\AbstractCrudController;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\EmailNotification;
-// rocXolid communication repositories
-use Softworx\RocXolid\Communication\Repositories\EmailNotification\Repository;
 // rocXolid communication components
 use Softworx\RocXolid\Communication\Components\ModelViewers\EmailNotificationViewer;
 // rocXolid communication controller traits
@@ -27,16 +25,6 @@ use Softworx\RocXolid\Communication\Http\Controllers\Traits\SendsTestNotificatio
 class Controller extends AbstractCrudController
 {
     use SendsTestNotifications;
-
-    /**
-     * {@inheritDoc}
-     */
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected static $repository_class = Repository::class;
 
     /**
      * {@inheritDoc}

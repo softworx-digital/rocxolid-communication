@@ -8,16 +8,11 @@ use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as CrudModelViewer
 use Softworx\RocXolid\Models\Contracts\Crudable as CrudableModel;
 use Softworx\RocXolid\Communication\Http\Controllers\AbstractCrudController;
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
-use Softworx\RocXolid\Communication\Repositories\CommunicationLog\Repository;
 use Softworx\RocXolid\Communication\Repositories\CommunicationLog\ModelRepository;
 use Softworx\RocXolid\Communication\Components\ModelViewers\CommunicationLogViewer;
 
 class Controller extends AbstractCrudController
 {
-
-
-    protected static $repository_class = Repository::class;
-
     protected static $repository_param_class = [
         'model-log' => ModelRepository::class,
     ];
