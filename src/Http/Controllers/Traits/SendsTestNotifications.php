@@ -26,7 +26,7 @@ trait SendsTestNotifications
      * Display the dialog to enter testing e-mail.
      *
      * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request
+     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
      * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
      */
     public function sendTestNotificationConfirm(CrudRequest $request, Crudable $model)//: View
@@ -68,7 +68,7 @@ trait SendsTestNotifications
      * Send test notification.
      *
      * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request
+     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
      * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
      */
     public function sendTestNotification(CrudRequest $request, Crudable $model)//: Response - returns JSON for ajax calls
