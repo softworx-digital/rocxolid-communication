@@ -33,22 +33,10 @@ trait SendsTestNotifications
     {
         $this->authorize('sendTestNotification', $model);
 
-        $this->setModel($model);
-
-        $repository = $this->getRepository($this->getRepositoryParam($request));
-
-        $form = $repository->getForm($this->getFormParam($request));
-        $form
-            ->adjustUpdate($request);
-
-        $form_component = CrudFormComponent::build($this, $this)
-            ->setForm($form)
-            ->setRepository($repository);
-
-        $model_viewer_component = $this
-            ->getModelViewerComponent($this->getModel())
-            ->setFormComponent($form_component)
-            ->adjustUpdate($request, $this);
+        $model_viewer_component = $this->getModelViewerComponent(
+            $model,
+            $this->getFormComponent($this->getForm($request, $model))
+        );
 
         if ($request->ajax()) {
             return $this->response
@@ -75,34 +63,25 @@ trait SendsTestNotifications
     {
         $this->authorize('sendTestNotification', $model);
 
-        $this->setModel($model);
+        $form = $this->getForm($request, $model);
 
-        $repository = $this->getRepository($this->getRepositoryParam($request));
-
-        $form = $repository->getForm($this->getFormParam($request));
-        $form->submit();
-
-        if ($form->isValid()) {
-            $form_component = CrudFormComponent::build($this, $this)
-                ->setForm($form)
-                ->setRepository($repository);
-
-            $model_viewer_component = $this->getModelViewerComponent($this->getModel());
+        if ($form->submit()->isValid()) {
+            $model_viewer_component = $this->getModelViewerComponent($model);
 
             $email = $form->getFormField('email')->getValue();
 
             if ($sent = $this->sendNotification($model, $email)) {
                 $this->response
-                    ->notifySuccess($form_component->translate('text.sending-success'))
-                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $this->getModel()->getKey()));
+                    ->notifySuccess($model_viewer_component->translate('text.sending-success'))
+                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $model->getKey()));
             } else {
                 $this->response
-                    ->notifyError($form_component->translate('text.sending-failure'));
+                    ->notifyError($model_viewer_component->translate('text.sending-failure'));
             }
 
             return $this->response->get();
         } else {
-            return $this->errorResponse($request, $repository, $form, 'sendTestNotification');
+            return $this->errorResponse($request, $model, $form, 'sendTestNotification');
         }
     }
 
