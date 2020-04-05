@@ -26,6 +26,8 @@ class Controller extends AbstractCrudController
 {
     use SendsTestNotifications;
 
+    protected static $model_viewer_type = EmailNotificationViewer::class;
+
     /**
      * {@inheritDoc}
      */
@@ -39,14 +41,4 @@ class Controller extends AbstractCrudController
         'sendTestNotificationConfirm' => 'send-test',
         'sendTestNotification' => 'send-test',
     ];
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getModelViewerComponent(CrudableModel $model): CrudModelViewerComponent
-    {
-        return EmailNotificationViewer::build($this, $this)
-            ->setModel($model)
-            ->setController($this);
-    }
 }
