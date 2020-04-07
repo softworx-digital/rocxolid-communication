@@ -23,6 +23,7 @@ class Controller extends AbstractCrudController
 
     public function getCommunicationLogViewerComponent(CrudableModel $log_model): CrudModelViewerComponent
     {
+dd(__METHOD__, '@todo');
         return (new CommunicationLogViewer())
             ->setModel($log_model)
             ->setController($this);
