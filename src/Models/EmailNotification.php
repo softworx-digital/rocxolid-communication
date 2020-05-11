@@ -5,7 +5,7 @@ namespace Softworx\RocXolid\Communication\Models;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // rocXolid services
-use Softworx\RocXolid\Services\ViewService;
+use Softworx\RocXolid\Rendering\Services\RenderingService;
 // rocXolid models
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid communication model contracts
@@ -129,6 +129,6 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         $content = str_replace('-&gt;', '->', $this->content);
         // $content = nl2br($content);
 
-        return ViewService::render($content, $this->event->getSendableVariables());
+        return RenderingService::render($content, $this->event->getSendableVariables());
     }
 }
