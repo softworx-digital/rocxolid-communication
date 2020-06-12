@@ -37,7 +37,7 @@ class SmsNotification extends AbstractCrudModel implements Sendable
     /**
      * {@inheritDoc}
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return '<i class="fa fa-mobile fa-2x fa-fw"></i>';
     }

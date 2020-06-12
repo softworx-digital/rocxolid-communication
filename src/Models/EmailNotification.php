@@ -51,7 +51,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     /**
      * {@inheritDoc}
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         if ($this->event_type) {
             $title = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
