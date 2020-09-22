@@ -6,8 +6,6 @@ namespace Softworx\RocXolid\Communication\Http\Controllers\Traits;
 use Softworx\RocXolid\Http\Requests\CrudRequest;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid form components
-use Softworx\RocXolid\Components\Forms\CrudForm as CrudFormComponent;
 // rocXolid communication services
 use Softworx\RocXolid\Communication\Services\EmailService;
 // rocXolid communication model contracts

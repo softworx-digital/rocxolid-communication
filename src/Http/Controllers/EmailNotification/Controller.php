@@ -2,14 +2,8 @@
 
 namespace Softworx\RocXolid\Communication\Http\Controllers\EmailNotification;
 
-// rocXolid models
-use Softworx\RocXolid\Models\Contracts\Crudable as CrudableModel;
-// rocXolid components
-use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as CrudModelViewerComponent;
 // rocXolid communication controllers
 use Softworx\RocXolid\Communication\Http\Controllers\AbstractCrudController;
-// rocXolid communication models
-use Softworx\RocXolid\Communication\Models\EmailNotification;
 // rocXolid communication components
 use Softworx\RocXolid\Communication\Components\ModelViewers\EmailNotificationViewer;
 // rocXolid communication controller traits

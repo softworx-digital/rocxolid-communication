@@ -84,7 +84,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
      */
     public function getSubject(): string
     {
-        return ViewService::render($this->subject, $this->event->getSendableVariables());
+        return RenderingService::render($this->subject, $this->event->getSendableVariables());
     }
 
     /**
