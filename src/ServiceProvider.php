@@ -62,7 +62,7 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
         // php artisan vendor:publish --provider="Softworx\RocXolid\Communication\ServiceProvider" --tag="lang" (--force to overwrite)
         $this->publishes([
             //__DIR__ . '/../resources/lang' => resource_path('lang/vendor/softworx/rocXolid/communication'),
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/rocXolid:communication'),
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/rocXolid:communication'), // used by laravel's FileLoaded::loadNamespaceOverrides()
         ], 'lang');
 
         // views files
