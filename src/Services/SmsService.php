@@ -41,7 +41,7 @@ class SmsService
 
     private function sendToProvider()
     {
-        // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
+        // @todo nejako inak renderovat content - asi cez fetchovanie componentu
         $response = @file_get_contents(sprintf(self::SERVICE_URL, $this->sendable->getSender(), $this->sendable->getRecipient(), urlencode($this->sendable->getContent())));
 
         if ($response) {

@@ -2,7 +2,7 @@
 
 namespace Softworx\RocXolid\Communication\Models\Contracts;
 
-// @todo - doplnit + typy
+// @todo doplnit + typy
 interface CommunicationLoggable
 {
     public function communicationLogs();
