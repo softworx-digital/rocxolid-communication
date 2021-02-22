@@ -3,6 +3,8 @@
 namespace Softworx\RocXolid\Communication\Services;
 
 use Mail;
+use Illuminate\Mail\Message;
+//
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
 class EmailService
@@ -30,9 +32,10 @@ class EmailService
 
     private function sendToProvider()
     {
-        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function ($message) {
+        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function (Message $message) {
             $sender = $this->sendable->getSender();
 
+            $message->priority($this->sendable->getPriority());
             $message->subject($this->sendable->getSubject());
             $message->from($sender['email'], $sender['name']);
 

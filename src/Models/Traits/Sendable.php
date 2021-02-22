@@ -69,6 +69,14 @@ trait Sendable
     /**
      * {@inheritDoc}
      */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getContent(): string
     {
         if (is_null($this->rendered_content)) {

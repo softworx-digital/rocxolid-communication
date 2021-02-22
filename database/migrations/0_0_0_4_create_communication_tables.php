@@ -44,6 +44,7 @@ class CreateCommunicationTables extends Migration
             $table->string('recipient_email')->nullable();
             $table->string('cc_recipient_email')->nullable();
             $table->string('bcc_recipient_email')->nullable();
+            $table->unsignedTinyInteger('priority')->default(3);
             $table->string('subject');
             $table->text('content');
             $table->text('description')->nullable();

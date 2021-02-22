@@ -103,7 +103,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
     public function getRecipients(): Collection
     {
         if ($this->recipient_email) {
-            return collect($this->recipient_email);
+            return collect(explode(',', $this->recipient_email));
         } else {
             return $this->event->getRecipients();
         }

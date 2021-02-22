@@ -41,6 +41,13 @@ interface Sendable
     public function getSender(bool $flat = false);
 
     /**
+     * Get message priority.
+     *
+     * @return integer
+     */
+    public function getPriority(): int;
+
+    /**
      * Set notification recipient.
      *
      * @param string $recipient Notification recipient.
