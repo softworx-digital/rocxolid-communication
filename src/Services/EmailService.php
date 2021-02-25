@@ -2,7 +2,7 @@
 
 namespace Softworx\RocXolid\Communication\Services;
 
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
 //
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
@@ -21,6 +21,7 @@ class EmailService
         if (!empty($this->sendable->getContent())) {
             $success = $this->sendToProvider();
 
+            // @todo log failed recipients with Mail::failures()
             $this->sendable->logActivity($success);
             $this->sendable->setStatus($success);
 
@@ -30,7 +31,7 @@ class EmailService
         }
     }
 
-    private function sendToProvider()
+    private function sendToProvider(): bool
     {
         Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function (Message $message) {
             $sender = $this->sendable->getSender();
@@ -60,6 +61,6 @@ class EmailService
             }
         });
 
-        return true;
+        return collect(Mail::failures())->isEmpty();
     }
 }
