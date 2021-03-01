@@ -33,7 +33,9 @@ class EmailService
 
     private function sendToProvider(): bool
     {
-        Mail::send('emails.default', [ 'content' => $this->sendable->getContent() ], function (Message $message) {
+        Mail::send('emails.default', [
+            'content' => $this->sendable->getContent(),
+        ], function (Message $message) {
             $sender = $this->sendable->getSender();
 
             $message->priority($this->sendable->getPriority());
