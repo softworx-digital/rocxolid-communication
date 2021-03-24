@@ -13,7 +13,7 @@ use Softworx\RocXolid\Communication\Http\Controllers\Traits\SendsTestNotificatio
  * SMS notification CRUD controller.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 class Controller extends AbstractCrudController

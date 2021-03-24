@@ -12,7 +12,7 @@ use Softworx\RocXolid\Communication\Models\CommunicationLog;
  * Interface to enable model to be sent.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 interface Sendable

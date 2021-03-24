@@ -2,18 +2,24 @@
 
 namespace Softworx\RocXolid\Communication\Models\Tables\CommunicationLog;
 
+// rocXolid tables & types
 use Softworx\RocXolid\Tables\AbstractCrudTable;
-use Softworx\RocXolid\Tables\Columns\Type\Text;
-use Softworx\RocXolid\Tables\Columns\Type\Flag;
-use Softworx\RocXolid\Tables\Columns\Type\ModelRelation;
+use Softworx\RocXolid\Tables\Filters\Type as FilterType;
+use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
+use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
+/**
+ * Default CommunicationLog model table.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Communication
+ * @version 1.0.0
+ */
 class Index extends AbstractCrudTable
 {
-    protected static $translation_param = 'communication-log';
-
     protected $columns = [
         'sendable_id' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sendable_id'
@@ -26,7 +32,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'sendable_type' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sendable_type'
@@ -39,7 +45,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'action' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'action'
@@ -52,7 +58,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'sender' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender'
@@ -65,7 +71,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'recipient' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'recipient'
@@ -78,7 +84,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'subject' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'subject'
@@ -86,7 +92,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'is_success' => [
-            'type' => Flag::class,
+            'type' => ColumnType\Flag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_success'

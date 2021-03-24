@@ -10,11 +10,8 @@ use Softworx\RocXolid\Rendering\Services\RenderingService;
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
-// rocXolid communication model traits
-use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
 // rocXolid common model traits
-use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
-use Softworx\RocXolid\Common\Models\Traits\HasWeb;
+use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
 
 /**
  * Sendable e-mail notification.
@@ -23,12 +20,13 @@ use Softworx\RocXolid\Common\Models\Traits\HasWeb;
  * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
-class EmailNotification extends AbstractCrudModel implements Sendable
+class PushNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
-    use HasWeb;
-    // use UserGroupAssociatedWeb; // @todo "hotfixed"
-    use SendableTrait;
+    use CommonTraits\HasWeb;
+    use CommonTraits\HasLocalization;
+    // use CommonTraits\UserGroupAssociatedWeb;
+    use Traits\Sendable;
 
     protected $fillable = [
         'event_type',
@@ -37,8 +35,6 @@ class EmailNotification extends AbstractCrudModel implements Sendable
         'sender_email',
         'sender_name',
         'recipient_email',
-        'cc_recipient_email',
-        'bcc_recipient_email',
         'subject',
         'content',
         'description'

@@ -2,19 +2,25 @@
 
 namespace Softworx\RocXolid\Communication\Models\Tables\SmsNotification;
 
+// rocXolid tables & types
 use Softworx\RocXolid\Tables\AbstractCrudTable;
-use Softworx\RocXolid\Tables\Columns\Type\Text;
-use Softworx\RocXolid\Tables\Columns\Type\Flag;
-use Softworx\RocXolid\Tables\Columns\Type\ModelRelation;
+use Softworx\RocXolid\Tables\Filters\Type as FilterType;
+use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
+use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
+/**
+ * Default SmsNotification model table.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Communication
+ * @version 1.0.0
+ */
 class Index extends AbstractCrudTable
 {
-    protected static $translation_param = 'sms-system-notification';
-
     protected $columns = [
         /*
         'model' => [
-            'type' => ModelRelation::class,
+            'type' => ColumnType\ModelRelation::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -33,7 +39,7 @@ class Index extends AbstractCrudTable
         ],
         */
         'event_type' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'event_type'
@@ -46,7 +52,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'sender' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender'
@@ -59,7 +65,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'recipient_phone_number' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'recipient_phone_number'
@@ -72,7 +78,7 @@ class Index extends AbstractCrudTable
             ],
         ],
         'is_enabled' => [
-            'type' => Flag::class,
+            'type' => ColumnType\Flag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_enabled'

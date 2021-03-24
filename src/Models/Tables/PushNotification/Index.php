@@ -1,6 +1,6 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Models\Tables\EmailNotification;
+namespace Softworx\RocXolid\Communication\Models\Tables\PushNotification;
 
 // rocXolid tables & types
 use Softworx\RocXolid\Tables\AbstractCrudTable;
@@ -9,7 +9,7 @@ use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
 use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
 /**
- * Default EmailNotification model table.
+ * Default PushNotification model table.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\Communication

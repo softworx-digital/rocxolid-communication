@@ -8,6 +8,7 @@ use Softworx\RocXolid\Http\Requests\CrudRequest;
 use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid communication services
 use Softworx\RocXolid\Communication\Services\EmailService;
+use Softworx\RocXolid\Communication\Services\PushService;
 // rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
@@ -66,7 +67,7 @@ trait SendsTestNotifications
         if ($form->submit()->isValid()) {
             $model_viewer_component = $this->getModelViewerComponent($model);
 
-            $email = $form->getFormField('email')->getValue();
+            $email = $form->getFormField('user_id')->getValue();
 
             if ($sent = $this->sendNotification($model, $email)) {
                 $this->response
@@ -105,6 +106,7 @@ trait SendsTestNotifications
         $notification->setEvent($event);
         $notification->setRecipient($email);
 
-        return (new EmailService($notification))->send();
+        // return (new EmailService($notification))->send();
+        return (new PushService($notification))->send();
     }
 }

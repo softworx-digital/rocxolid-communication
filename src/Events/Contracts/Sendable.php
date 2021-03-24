@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Interface to enable event to be further passed to a sending service.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 interface Sendable

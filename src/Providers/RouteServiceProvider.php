@@ -46,6 +46,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             'as' => 'rocXolid.communication.',
         ], function ($router) {
             CrudRouterService::create('email-notification', \EmailNotification\Controller::class);
+            CrudRouterService::create('push-notification', \PushNotification\Controller::class);
             CrudRouterService::create('sms-notification', \SmsNotification\Controller::class);
             // logs
             CrudRouterService::create('communication-log', \CommunicationLog\Controller::class);
@@ -56,6 +57,14 @@ class RouteServiceProvider extends IlluminateServiceProvider
             ], function ($router) {
                 $router->get('/send-test-notification/{email_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
                 $router->post('/send-test-notification/{email_notification}', 'Controller@sendTestNotification')->name('send-test');
+            });
+
+            $router->group([
+                'namespace' => 'PushNotification',
+                'prefix' => 'push-notification',
+            ], function ($router) {
+                $router->get('/send-test-notification/{push_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
+                $router->post('/send-test-notification/{push_notification}', 'Controller@sendTestNotification')->name('send-test');
             });
 
             $router->group([
@@ -86,6 +95,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
     private function mapRouteModels(Router $router): IlluminateServiceProvider
     {
         $router->model('email_notification', \Softworx\RocXolid\Communication\Models\EmailNotification::class);
+        $router->model('push_notification', \Softworx\RocXolid\Communication\Models\PushNotification::class);
         $router->model('sms_notification', \Softworx\RocXolid\Communication\Models\SmsNotification::class);
         $router->model('communication_log', \Softworx\RocXolid\Communication\Models\CommunicationLog::class);
 

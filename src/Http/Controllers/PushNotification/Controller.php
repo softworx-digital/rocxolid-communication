@@ -1,16 +1,16 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Http\Controllers\EmailNotification;
+namespace Softworx\RocXolid\Communication\Http\Controllers\PushNotification;
 
 // rocXolid communication controllers
 use Softworx\RocXolid\Communication\Http\Controllers\AbstractCrudController;
 // rocXolid communication components
-use Softworx\RocXolid\Communication\Components\ModelViewers\EmailNotificationViewer;
+use Softworx\RocXolid\Communication\Components\ModelViewers\PushNotificationViewer;
 // rocXolid communication controller traits
 use Softworx\RocXolid\Communication\Http\Controllers\Traits\SendsTestNotifications;
 
 /**
- * E-mail notification CRUD controller.
+ * Push notification CRUD controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\Communication
@@ -20,7 +20,7 @@ class Controller extends AbstractCrudController
 {
     use SendsTestNotifications;
 
-    protected static $model_viewer_type = EmailNotificationViewer::class;
+    protected static $model_viewer_type = PushNotificationViewer::class;
 
     /**
      * {@inheritDoc}

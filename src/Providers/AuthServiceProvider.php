@@ -22,8 +22,9 @@ class AuthServiceProvider extends IlluminateAuthServiceProvider
      *
      * @var array
      */
-    protected $policies = [
+    protected $policies = [ // @todo problem with abstraction setting
         Models\EmailNotification::class => Policies\SendablePolicy::class,
+        Models\PushNotification::class => Policies\SendablePolicy::class,
         Models\SmsNotification::class => Policies\SendablePolicy::class,
     ];
 

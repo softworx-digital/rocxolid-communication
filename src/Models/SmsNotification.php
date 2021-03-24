@@ -15,7 +15,7 @@ use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
  * Sendable SMS notification.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 class SmsNotification extends AbstractCrudModel implements Sendable

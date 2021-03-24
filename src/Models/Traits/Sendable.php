@@ -2,9 +2,7 @@
 
 namespace Softworx\RocXolid\Communication\Models\Traits;
 
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations;
 // rocXolid communication contracts
 use Softworx\RocXolid\Communication\Contracts\CommunicationLoggable;
 // rocXolid communication event contracts
@@ -18,7 +16,7 @@ use Softworx\RocXolid\Communication\Models\CommunicationLog;
  * Trait to enable model to be sent.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 trait Sendable
@@ -71,7 +69,7 @@ trait Sendable
      */
     public function getPriority(): int
     {
-        return $this->priority;
+        return $this->priority ?? 0;
     }
 
     /**
@@ -131,7 +129,7 @@ trait Sendable
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function communicationLogs(): MorphMany
+    public function communicationLogs(): Relations\MorphMany
     {
         return $this->morphMany(CommunicationLog::class, 'sendable');
     }
