@@ -1,20 +1,26 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\SmsNotification;
+namespace Softworx\RocXolid\Communication\Models\Tables\SmsNotification;
 
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+// rocXolid tables & types
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+use Softworx\RocXolid\Tables\Filters\Type as FilterType;
+use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
+use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
-class Repository extends AbstractCrudRepository
+/**
+ * Default SmsNotification model table.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Communication
+ * @version 1.0.0
+ */
+class Index extends AbstractCrudTable
 {
-    protected static $translation_param = 'sms-system-notification';
-
     protected $columns = [
         /*
         'model' => [
-            'type' => ModelRelation::class,
+            'type' => ColumnType\ModelRelation::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -33,7 +39,7 @@ class Repository extends AbstractCrudRepository
         ],
         */
         'event_type' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'event_type'
@@ -46,7 +52,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'sender' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender'
@@ -59,7 +65,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'recipient_phone_number' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'recipient_phone_number'
@@ -72,7 +78,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'is_enabled' => [
-            'type' => Flag::class,
+            'type' => ColumnType\Flag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_enabled'

@@ -33,10 +33,6 @@ class TranslationServiceProvider extends IlluminateServiceProvider
      */
     private function load()
     {
-        // customized translations preference
-        $this->loadTranslationsFrom(resource_path('lang/vendor/softworx/rocXolid:communication'), 'rocXolid:communication');
-
-        // pre-defined translations fallback
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'rocXolid:communication');
 
         return $this;

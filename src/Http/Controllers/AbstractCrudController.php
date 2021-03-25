@@ -8,10 +8,10 @@ use Softworx\RocXolid\Http\Controllers\AbstractCrudController as RocXolidAbstrac
 use Softworx\RocXolid\Admin\Components\Dashboard\Crud as CrudDashboard;
 
 /**
- * Communication CRUD controller.
+ * rocXolid Communication CRUD controller.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 abstract class AbstractCrudController extends RocXolidAbstractCrudController
@@ -19,7 +19,7 @@ abstract class AbstractCrudController extends RocXolidAbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected static $dashboard_class = CrudDashboard::class;
+    protected static $dashboard_type = CrudDashboard::class;
 
     /**
      * {@inheritDoc}

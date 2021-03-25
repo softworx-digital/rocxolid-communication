@@ -1,19 +1,25 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\CommunicationLog;
+namespace Softworx\RocXolid\Communication\Models\Tables\CommunicationLog;
 
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+// rocXolid tables & types
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+use Softworx\RocXolid\Tables\Filters\Type as FilterType;
+use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
+use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
-class Repository extends AbstractCrudRepository
+/**
+ * Default CommunicationLog model table.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Communication
+ * @version 1.0.0
+ */
+class Index extends AbstractCrudTable
 {
-    protected static $translation_param = 'communication-log';
-
     protected $columns = [
         'sendable_id' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sendable_id'
@@ -26,7 +32,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'sendable_type' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sendable_type'
@@ -39,7 +45,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'action' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'action'
@@ -52,7 +58,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'sender' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender'
@@ -65,7 +71,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'recipient' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'recipient'
@@ -78,7 +84,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'subject' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'subject'
@@ -86,7 +92,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'is_success' => [
-            'type' => Flag::class,
+            'type' => ColumnType\Flag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_success'

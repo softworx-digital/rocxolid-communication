@@ -4,6 +4,6 @@ namespace Softworx\RocXolid\Communication\Components\ModelViewers;
 
 use Softworx\RocXolid\Communication\Components\ModelViewers\AbstractCrudModelViewer;
 
-class EmailNotificationViewer extends AbstractCrudModelViewer
+class PushNotificationViewer extends AbstractCrudModelViewer
 {
 }

@@ -32,16 +32,16 @@ class SmsService
     {
         $url = sprintf(self::SERVICE_URL, urlencode($sender), $recipient, urlencode($content));
 
-        dump($url);
+        dump(__METHOD__, $url);
 
         $response = @file_get_contents($url);
 
-        dd($response);
+        dd(__METHOD__, $response);
     }
 
-    private function sendToProvider()
+    private function sendToProvider(): bool
     {
-        // @todo - nejako inak renderovat content - asi cez fetchovanie componentu
+        // @todo nejako inak renderovat content - asi cez fetchovanie componentu
         $response = @file_get_contents(sprintf(self::SERVICE_URL, $this->sendable->getSender(), $this->sendable->getRecipient(), urlencode($this->sendable->getContent())));
 
         if ($response) {

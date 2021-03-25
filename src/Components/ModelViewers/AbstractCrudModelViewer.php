@@ -7,11 +7,7 @@ use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as RocXolidCrudMod
 /**
  *
  */
-class CrudModelViewer extends RocXolidCrudModelViewer
+abstract class AbstractCrudModelViewer extends RocXolidCrudModelViewer
 {
     protected $view_package = 'rocXolid:communication';
-
-    protected $view_directory = '';
-
-    protected $translation_package = 'rocXolid:communication';
 }

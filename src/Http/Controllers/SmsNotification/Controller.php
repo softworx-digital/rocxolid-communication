@@ -6,8 +6,6 @@ namespace Softworx\RocXolid\Communication\Http\Controllers\SmsNotification;
 use Softworx\RocXolid\Communication\Http\Controllers\AbstractCrudController;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\SmsNotification;
-// rocXolid communication repositories
-use Softworx\RocXolid\Communication\Repositories\SmsNotification\Repository;
 // rocXolid communication controller traits
 use Softworx\RocXolid\Communication\Http\Controllers\Traits\SendsTestNotifications;
 
@@ -15,20 +13,10 @@ use Softworx\RocXolid\Communication\Http\Controllers\Traits\SendsTestNotificatio
  * SMS notification CRUD controller.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 class Controller extends AbstractCrudController
 {
     use SendsTestNotifications;
-
-    /**
-     * {@inheritDoc}
-     */
-    protected static $model_class = SmsNotification::class;
-
-    /**
-     * {@inheritDoc}
-     */
-    protected static $repository_class = Repository::class;
 }

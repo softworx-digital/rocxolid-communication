@@ -6,10 +6,9 @@ namespace Softworx\RocXolid\Communication\Http\Controllers\Traits;
 use Softworx\RocXolid\Http\Requests\CrudRequest;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid form components
-use Softworx\RocXolid\Components\Forms\CrudForm as CrudFormComponent;
 // rocXolid communication services
 use Softworx\RocXolid\Communication\Services\EmailService;
+use Softworx\RocXolid\Communication\Services\PushService;
 // rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
@@ -26,29 +25,17 @@ trait SendsTestNotifications
      * Display the dialog to enter testing e-mail.
      *
      * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request
+     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
      * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
      */
     public function sendTestNotificationConfirm(CrudRequest $request, Crudable $model)//: View
     {
         $this->authorize('sendTestNotification', $model);
 
-        $this->setModel($model);
-
-        $repository = $this->getRepository($this->getRepositoryParam($request));
-
-        $form = $repository->getForm($this->getFormParam($request));
-        $form
-            ->adjustUpdate($request);
-
-        $form_component = CrudFormComponent::build($this, $this)
-            ->setForm($form)
-            ->setRepository($repository);
-
-        $model_viewer_component = $this
-            ->getModelViewerComponent($this->getModel())
-            ->setFormComponent($form_component)
-            ->adjustUpdate($request, $this);
+        $model_viewer_component = $this->getModelViewerComponent(
+            $model,
+            $this->getFormComponent($this->getForm($request, $model))
+        );
 
         if ($request->ajax()) {
             return $this->response
@@ -68,41 +55,32 @@ trait SendsTestNotifications
      * Send test notification.
      *
      * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request
+     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
      * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
      */
     public function sendTestNotification(CrudRequest $request, Crudable $model)//: Response - returns JSON for ajax calls
     {
         $this->authorize('sendTestNotification', $model);
 
-        $this->setModel($model);
+        $form = $this->getForm($request, $model);
 
-        $repository = $this->getRepository($this->getRepositoryParam($request));
+        if ($form->submit()->isValid()) {
+            $model_viewer_component = $this->getModelViewerComponent($model);
 
-        $form = $repository->getForm($this->getFormParam($request));
-        $form->submit();
-
-        if ($form->isValid()) {
-            $form_component = CrudFormComponent::build($this, $this)
-                ->setForm($form)
-                ->setRepository($repository);
-
-            $model_viewer_component = $this->getModelViewerComponent($this->getModel());
-
-            $email = $form->getFormField('email')->getValue();
+            $email = $form->getFormField('user_id')->getValue();
 
             if ($sent = $this->sendNotification($model, $email)) {
                 $this->response
-                    ->notifySuccess($form_component->translate('text.sending-success'))
-                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $this->getModel()->getKey()));
+                    ->notifySuccess($model_viewer_component->translate('text.sending-success'))
+                    ->modalClose($model_viewer_component->getDomId('modal-send-test', $model->getKey()));
             } else {
                 $this->response
-                    ->notifyError($form_component->translate('text.sending-failure'));
+                    ->notifyError($model_viewer_component->translate('text.sending-failure'));
             }
 
             return $this->response->get();
         } else {
-            return $this->errorResponse($request, $repository, $form, 'sendTestNotification');
+            return $this->errorResponse($request, $model, $form, 'sendTestNotification');
         }
     }
 
@@ -128,6 +106,7 @@ trait SendsTestNotifications
         $notification->setEvent($event);
         $notification->setRecipient($email);
 
-        return (new EmailService($notification))->send();
+        // return (new EmailService($notification))->send();
+        return (new PushService($notification))->send();
     }
 }

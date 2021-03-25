@@ -1,26 +1,27 @@
 <div class="x_panel ajax-overlay">
     {!! $component->render('include.header-panel') !!}
-@if ($component->getFormComponent()->hasOption('section') && ($component->getFormComponent()->getOption('section') === 'composition'))
-    {!! Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) !!}
+
+    {{ Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) }}
         {{ Form::hidden('_method', 'PUT') }}
         {{ Form::hidden('_submit-action', null) }}
+        {{ Form::hidden('_param', $component->getFormComponent()->getForm()->getParam()) }}
         {{ Form::hidden('_section', $component->getFormComponent()->hasOption('section') ? $component->getFormComponent()->getOption('section') : null) }}
 
         <div class="x_content">
-            <div class="col-xs-5">
+            <div class="col-xs-7">
                 {!! $component->getFormComponent()->render('include.fieldset') !!}
             </div>
-            <div class="col-xs-7">
-            @foreach ($component->getModel()->getAvailableTemplateVariables() as $param => $event_model)
-                <div class="col-xs-6">
-                    <h4>{{ $param }}</h4>
-                    <ul class="list-group">
-                    @foreach ($event_model->getAllAttributes() as $attribute)
-                        <li class="list-group-item padding-0"><span class="btn btn-sm btn-primary margin-2 margin-right-10" data-add-html="${{ $param }}->{{ $attribute }}"><i class="fa fa-plus"></i></span>{{ $param }}.{{ $attribute }}</li>
-                    @endforeach
-                    </ul>
+            <div class="keep-scroll-position">
+                <div class="col-xs-5 padding-top-10">
+                    <h3>{!! $component->translate('text.tokens') !!}</h3>
+                    <p>{!! $component->translate('text.tokens-help') !!}</p>
                 </div>
-                <div class="col-xs-6">
+            @foreach ($component->getModel()->getAvailableTemplateVariables() as $param => $event_model)
+                <div class="col-xs-5">
+                    {!! $event_model->getModelViewerComponent()->render('include.tokenable', [ 'param' => $param ]) !!}
+                </div>
+            @if (false)
+                <div class="col-xs-5">
                 @foreach ($event_model->getRelationshipMethods() as $relationship)
                     <h4>{{ $param }}.{{ $relationship }}</h4>
                     <ul class="list-group">
@@ -30,11 +31,12 @@
                     </ul>
                 @endforeach
                 </div>
+            @endif
             @endforeach
             </div>
         </div>
         {!! $component->getFormComponent()->render('include.footer') !!}
-    {!! Form::close() !!}
+    {{ Form::close() }}
 
     @push('script')
     <script type="text/javascript">
@@ -73,7 +75,4 @@
         @endforeach
     @endpush
     @endif
-@else
-    {!! $component->getFormComponent()->render($component->getFormComponent()->getOption('template', 'update')) !!}
-@endif
 </div>

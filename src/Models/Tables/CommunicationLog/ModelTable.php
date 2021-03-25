@@ -1,21 +1,21 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\CommunicationLog;
+namespace Softworx\RocXolid\Communication\Models\Tables\CommunicationLog;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-// rocXolid repositories
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-// rocXolid repository contracts
-use Softworx\RocXolid\Repositories\Contracts\Repository;
-// rocXolid repository column types
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\DateTime;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
+// rocXolid tables
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+// rocXolid table contracts
+use Softworx\RocXolid\Tables\Contracts\Table;
+// rocXolid table column types
+use Softworx\RocXolid\Tables\Columns\Type\Text;
+use Softworx\RocXolid\Tables\Columns\Type\Flag;
+use Softworx\RocXolid\Tables\Columns\Type\DateTime;
+use Softworx\RocXolid\Tables\Columns\Type\ModelRelation;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
 
-class ModelRepository extends AbstractCrudRepository
+class ModelTable extends AbstractCrudTable
 {
     protected static $translation_param = 'communication-log';
 
@@ -119,7 +119,7 @@ class ModelRepository extends AbstractCrudRepository
         ],
     ];
 
-    public function init(): Repository
+    public function init(): Table
     {
         if ($this->getRequest()->has('log_model')) {
             $this->setModelRelation($this->getRequest()->get('model_relation', null));
@@ -133,7 +133,7 @@ class ModelRepository extends AbstractCrudRepository
         return $this;
     }
 
-    public function setModelRelation(string $model_relation = null): Repository
+    public function setModelRelation(string $model_relation = null): Table
     {
         $this->model_relation = $model_relation;
 
@@ -149,7 +149,7 @@ class ModelRepository extends AbstractCrudRepository
         return $this->model_relation;
     }
 
-    public function setLogModel($log_model = null): Repository
+    public function setLogModel($log_model = null): Table
     {
         $this->log_model = $log_model;
 

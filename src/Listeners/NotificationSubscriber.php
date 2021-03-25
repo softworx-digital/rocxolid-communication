@@ -15,7 +15,7 @@ use Softworx\RocXolid\Communication\Events\Contracts\Sendable;
  * Communication events listener.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 class NotificationSubscriber

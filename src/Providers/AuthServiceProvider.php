@@ -3,13 +3,10 @@
 namespace Softworx\RocXolid\Communication\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as IlluminateAuthServiceProvider;
-// rocXolid model contracts
-use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid user management policies
-use Softworx\RocXolid\Communication\Policies\SendablePolicy;
-// rocXolid user management models
-use Softworx\RocXolid\Communication\Models\EmailNotification;
-use Softworx\RocXolid\Communication\Models\SmsNotification;
+// rocXolid communication policies
+use Softworx\RocXolid\Communication\Policies;
+// rocXolid communication models
+use Softworx\RocXolid\Communication\Models;
 
 /**
  * rocXolid communication authorization service provider.
@@ -25,11 +22,15 @@ class AuthServiceProvider extends IlluminateAuthServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        EmailNotification::class => SendablePolicy::class,
-        SmsNotification::class => SendablePolicy::class,
+    protected $policies = [ // @todo problem with abstraction setting
+        Models\EmailNotification::class => Policies\SendablePolicy::class,
+        Models\PushNotification::class => Policies\SendablePolicy::class,
+        Models\SmsNotification::class => Policies\SendablePolicy::class,
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function register()
     {
         $this->registerPolicies();

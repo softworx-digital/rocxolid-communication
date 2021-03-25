@@ -12,7 +12,7 @@ use Softworx\RocXolid\Communication\Models\CommunicationLog;
  * Interface to enable model to be sent.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\Admin
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 interface Sendable
@@ -39,6 +39,13 @@ interface Sendable
      * @return string|array
      */
     public function getSender(bool $flat = false);
+
+    /**
+     * Get message priority.
+     *
+     * @return integer
+     */
+    public function getPriority(): int;
 
     /**
      * Set notification recipient.

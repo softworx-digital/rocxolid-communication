@@ -1,9 +1,10 @@
 <div class="x_panel ajax-overlay">
     {!! $component->render('include.header-panel') !!}
 
-    {!! Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) !!}
+    {{ Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) }}
         {{ Form::hidden('_method', 'PUT') }}
         {{ Form::hidden('_submit-action', null) }}
+        {{ Form::hidden('_param', $component->getFormComponent()->getForm()->getParam()) }}
         {{ Form::hidden('_section', $component->getFormComponent()->hasOption('section') ? $component->getFormComponent()->getOption('section') : null) }}
 
         <div class="x_content">
@@ -35,7 +36,7 @@
             </div>
         </div>
         {!! $component->getFormComponent()->render('include.footer') !!}
-    {!! Form::close() !!}
+    {{ Form::close() }}
 
     @push('script')
     <script type="text/javascript">

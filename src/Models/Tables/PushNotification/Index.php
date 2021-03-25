@@ -1,22 +1,26 @@
 <?php
 
-namespace Softworx\RocXolid\Communication\Repositories\EmailNotification;
+namespace Softworx\RocXolid\Communication\Models\Tables\PushNotification;
 
-use Softworx\RocXolid\Repositories\AbstractCrudRepository;
-use Softworx\RocXolid\Repositories\Columns\Type\Text;
-use Softworx\RocXolid\Repositories\Columns\Type\Flag;
-use Softworx\RocXolid\Repositories\Columns\Type\SwitchFlag;
-use Softworx\RocXolid\Repositories\Columns\Type\ModelRelation;
-use Softworx\RocXolid\Repositories\Columns\Type\ButtonAnchor;
+// rocXolid tables & types
+use Softworx\RocXolid\Tables\AbstractCrudTable;
+use Softworx\RocXolid\Tables\Filters\Type as FilterType;
+use Softworx\RocXolid\Tables\Columns\Type as ColumnType;
+use Softworx\RocXolid\Tables\Buttons\Type as ButtonType;
 
-class Repository extends AbstractCrudRepository
+/**
+ * Default PushNotification model table.
+ *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\Communication
+ * @version 1.0.0
+ */
+class Index extends AbstractCrudTable
 {
-    protected static $translation_param = 'email-system-notification';
-
     protected $columns = [
         /*
         'model' => [
-            'type' => ModelRelation::class,
+            'type' => ColumnType\ModelRelation::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -35,7 +39,7 @@ class Repository extends AbstractCrudRepository
         ],
         */
         'is_enabled' => [
-            'type' => SwitchFlag::class,
+            'type' => ColumnType\SwitchFlag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_enabled'
@@ -43,7 +47,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'is_can_be_turned_off' => [
-            'type' => Flag::class,
+            'type' => ColumnType\Flag::class,
             'options' => [
                 'label' => [
                     'title' => 'is_can_be_turned_off'
@@ -51,7 +55,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'web_id' => [
-            'type' => ModelRelation::class,
+            'type' => ColumnType\ModelRelation::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -69,7 +73,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'event_type' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'event_type'
@@ -83,7 +87,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'sender_email' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender_email'
@@ -96,7 +100,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'sender_name' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'sender_name'
@@ -109,7 +113,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'recipient_email' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'recipient_email'
@@ -122,7 +126,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'subject' => [
-            'type' => Text::class,
+            'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
                     'title' => 'subject'
@@ -133,7 +137,7 @@ class Repository extends AbstractCrudRepository
 
     protected $buttons = [
         'edit' => [
-            'type' => ButtonAnchor::class,
+            'type' => ButtonType\ButtonAnchor::class,
             'options' => [
                 'label' => [
                     'icon' => 'fa fa-pencil',
@@ -147,7 +151,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],
         'send-test' => [
-            'type' => ButtonAnchor::class,
+            'type' => ButtonType\ButtonAnchor::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -162,7 +166,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],/*
         'compose' => [
-            'type' => ButtonAnchor::class,
+            'type' => ButtonType\ButtonAnchor::class,
             'options' => [
                 'label' => [
                     'icon' => 'fa fa-object-group',
@@ -179,7 +183,7 @@ class Repository extends AbstractCrudRepository
             ],
         ],*/
         'delete' => [
-            'type' => ButtonAnchor::class,
+            'type' => ButtonType\ButtonAnchor::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
