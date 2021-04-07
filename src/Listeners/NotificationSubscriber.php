@@ -48,10 +48,19 @@ class NotificationSubscriber
     {
         $emails = collect();
 
-        $this->getEmails($event)->each(function ($email) use ($event, $emails) {
-            $email->setEvent($event);
-            $emails->push((new EmailService($email))->send());
-        });
+        try {
+            $this->getEmails($event)->each(function ($email) use ($event, $emails) {
+                $email->setEvent($event);
+                $emails->push((new EmailService($email))->send());
+            });
+        } catch (\Exception $e) {
+            // @todo hotfixed
+            if (config('app.debug')) {
+                throw $e;
+            } else {
+                logger()->error($e);
+            }
+        }
 
         return $emails;
     }
