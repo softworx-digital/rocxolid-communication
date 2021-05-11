@@ -51,7 +51,7 @@ class NotificationSubscriber
         try {
             $this->getEmails($event)->each(function ($email) use ($event, $emails) {
                 $email->setEvent($event);
-                $emails->push((new EmailService($email))->send());
+                $emails->push(app(EmailService::class)->send($email));
             });
         } catch (\Exception $e) {
             // @todo hotfixed
@@ -73,6 +73,14 @@ class NotificationSubscriber
      */
     protected function getEmails(Sendable $event): Collection
     {
+        // @todo ugly, this should be probably handled by event itself
+        if ($language = $event->getLanguage()) {
+            return EmailNotification::where('event_type', get_class($event))
+                ->where('language_id', $language->getKey())
+                ->where('is_enabled', 1)
+                ->get();
+        }
+
         return EmailNotification::where('event_type', get_class($event))->where('is_enabled', 1)->get();
     }
 }

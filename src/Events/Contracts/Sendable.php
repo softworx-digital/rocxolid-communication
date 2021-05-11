@@ -4,6 +4,8 @@ namespace Softworx\RocXolid\Communication\Events\Contracts;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+// rocXolid common models
+use Softworx\RocXolid\Common\Models\Language;
 
 /**
  * Interface to enable event to be further passed to a sending service.
@@ -34,4 +36,11 @@ interface Sendable
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function getSendingModel(): Model;
+
+    /**
+     * Retrieve Language reference.
+     *
+     * @return \Softworx\RocXolid\Common\Models\Language|null
+     */
+    public function getLanguage(): ?Language;
 }

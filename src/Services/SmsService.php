@@ -2,25 +2,21 @@
 
 namespace Softworx\RocXolid\Communication\Services;
 
+// rocXolid communication services
+use Softworx\RocXolid\Communication\Services\Contracts\NotificationService;
+// rocXolid communication models
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
-class SmsService
+class SmsService implements Contracts\NotificationService
 {
     const SERVICE_URL = 'http://as.eurosms.com/sms/Sender?action=send1SMSHTTP&i=1-4C71V3&c=A^c7L1v3&sender=%s&number=%s&msg=%s';
 
-    private $sendable;
-
-    public function __construct(Sendable $sendable)
+    public function send(Sendable $sendable)
     {
-        $this->sendable = $sendable;
-    }
-
-    public function send()
-    {
-        if (!empty($this->sendable->getContent())) {
+        if (!empty($sendable->getContent())) {
             $success = $this->sendToProvider();
 
-            $this->sendable->logActivity($success);
+            $sendable->logActivity($success);
 
             return $success;
         } else {
@@ -42,7 +38,7 @@ class SmsService
     private function sendToProvider(): bool
     {
         // @todo nejako inak renderovat content - asi cez fetchovanie componentu
-        $response = @file_get_contents(sprintf(self::SERVICE_URL, $this->sendable->getSender(), $this->sendable->getRecipient(), urlencode($this->sendable->getContent())));
+        $response = @file_get_contents(sprintf(self::SERVICE_URL, $sendable->getSender(), $sendable->getRecipient(), urlencode($sendable->getContent())));
 
         if ($response) {
             list($status, $id) = explode('|', $response);

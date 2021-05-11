@@ -10,11 +10,8 @@ use Softworx\RocXolid\Rendering\Services\RenderingService;
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
-// rocXolid communication model traits
-use Softworx\RocXolid\Communication\Models\Traits\Sendable as SendableTrait;
 // rocXolid common model traits
-use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
-use Softworx\RocXolid\Common\Models\Traits\HasWeb;
+use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
 
 /**
  * Sendable e-mail notification.
@@ -26,11 +23,14 @@ use Softworx\RocXolid\Common\Models\Traits\HasWeb;
 class EmailNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
-    use HasWeb;
-    // use UserGroupAssociatedWeb; // @todo "hotfixed"
-    use SendableTrait;
+    use CommonTraits\HasWeb;
+    use CommonTraits\HasLanguage;
+    // use CommonTraits\HasLocalization;
+    // use CommonTraits\UserGroupAssociatedWeb;
+    use Traits\Sendable;
 
     protected $fillable = [
+        'language_id',
         'event_type',
         'is_enabled',
         'is_can_be_turned_off',
@@ -46,6 +46,7 @@ class EmailNotification extends AbstractCrudModel implements Sendable
 
     protected $relationships = [
         // 'web',
+        'language',
     ];
 
     /**

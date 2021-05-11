@@ -3,41 +3,35 @@
 namespace Softworx\RocXolid\Communication\Services;
 
 use OneSignal;
-//
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
-//
+// rocXolid communication services
+use Softworx\RocXolid\Communication\Services\Contracts\NotificationService;
+// rocXolid communication models
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
-class PushService
+class PushService implements Contracts\NotificationService
 {
-    private $sendable;
-
-    public function __construct(Sendable $sendable)
+    public function send(Sendable $sendable)
     {
-        $this->sendable = $sendable;
-    }
-
-    public function send()
-    {
-        if (!empty($this->sendable->getContent())) {
-            $success = $this->sendToProvider();
+        if (!empty($sendable->getContent())) {
+            $success = $this->sendToProvider($sendable);
 
             // @todo log failed recipients with Mail::failures()
-            $this->sendable->logActivity($success);
-            $this->sendable->setStatus($success);
+            $sendable->logActivity($success);
+            $sendable->setStatus($success);
 
-            return $this->sendable;
+            return $sendable;
         } else {
             throw new \RuntimeException('Message is empty, cannot send!');
         }
     }
 
-    private function sendToProvider(): bool
+    private function sendToProvider(Sendable $sendable): bool
     {
         $message = "Cau Samo, toto je testovacia pushka cez OneSignal do browsera :)";
 
-        $this->sendable->getRecipients()->each(function ($user_id) use ($message) {
+        $sendable->getRecipients()->each(function ($user_id) use ($message) {
             OneSignal::sendNotificationToUser(
                 $message,
                 $user_id,

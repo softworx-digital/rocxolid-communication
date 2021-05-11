@@ -24,24 +24,27 @@ class PushNotification extends AbstractCrudModel implements Sendable
 {
     use SoftDeletes;
     use CommonTraits\HasWeb;
-    use CommonTraits\HasLocalization;
+    use CommonTraits\HasLanguage;
+    // use CommonTraits\HasLocalization;
     // use CommonTraits\UserGroupAssociatedWeb;
     use Traits\Sendable;
 
     protected $fillable = [
+        'language_id',
         'event_type',
         'is_enabled',
         'is_can_be_turned_off',
-        'sender_email',
-        'sender_name',
-        'recipient_email',
-        'subject',
+        'recipient_user_id',
+        'heading',
+        'subtitle',
+        'url',
         'content',
         'description'
     ];
 
     protected $relationships = [
         // 'web',
+        'language',
     ];
 
     /**
