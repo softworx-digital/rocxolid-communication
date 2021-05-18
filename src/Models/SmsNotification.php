@@ -67,8 +67,8 @@ class SmsNotification extends AbstractCrudModel implements Sendable
     /**
      * {@inheritDoc}
      */
-    public function getSubject()
+    public function getSubject(): string
     {
-        return null;
+        return '';
     }
 }

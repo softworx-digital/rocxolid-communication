@@ -8,6 +8,7 @@ use Illuminate\Events\Dispatcher;
 use Softworx\RocXolid\Communication\Services\EmailService;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\EmailNotification;
+use Softworx\RocXolid\Communication\Models\PushNotification;
 // rocXolid communication event contracts
 use Softworx\RocXolid\Communication\Events\Contracts\Sendable;
 
@@ -17,6 +18,7 @@ use Softworx\RocXolid\Communication\Events\Contracts\Sendable;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\Communication
  * @version 1.0.0
+ * @todo [RX-122]
  */
 class NotificationSubscriber
 {
@@ -46,12 +48,15 @@ class NotificationSubscriber
      */
     public function notify(Sendable $event): Collection
     {
-        $emails = collect();
+        $sendables = collect();
 
         try {
-            $this->getEmails($event)->each(function ($email) use ($event, $emails) {
-                $email->setEvent($event);
-                $emails->push(app(EmailService::class)->send($email));
+            $event->getNotificationTypes()->each(function (string $type) use ($event, $sendables) {
+                $this->getSendables($event, $type)->each(function ($sendable) use ($event, $sendables) {
+                    $sendable->setEvent($event);
+                    $sendable = $sendable->getCrudController()->notificationService()->send($sendable);
+                    $sendables->push($sendable);
+                });
             });
         } catch (\Exception $e) {
             // @todo hotfixed
@@ -62,25 +67,25 @@ class NotificationSubscriber
             }
         }
 
-        return $emails;
+        return $sendables;
     }
 
     /**
-     * Search for appropriate email notifications for given event.
+     * Search for appropriate sendable notifications for given event.
      *
      * @param \Softworx\RocXolid\Communication\Events\Contracts\Sendable $event
+     * @param string $type
      * @return \Illuminate\Support\Collection
      */
-    protected function getEmails(Sendable $event): Collection
+    protected function getSendables(Sendable $event, string $type): Collection
     {
-        // @todo ugly, this should be probably handled by event itself
         if ($language = $event->getLanguage()) {
-            return EmailNotification::where('event_type', get_class($event))
+            return $type::where('event_type', get_class($event))
                 ->where('language_id', $language->getKey())
                 ->where('is_enabled', 1)
                 ->get();
         }
 
-        return EmailNotification::where('event_type', get_class($event))->where('is_enabled', 1)->get();
+        return $type::where('event_type', get_class($event))->where('is_enabled', 1)->get();
     }
 }

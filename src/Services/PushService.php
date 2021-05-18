@@ -17,7 +17,6 @@ class PushService implements Contracts\NotificationService
         if (!empty($sendable->getContent())) {
             $success = $this->sendToProvider($sendable);
 
-            // @todo log failed recipients with Mail::failures()
             $sendable->logActivity($success);
             $sendable->setStatus($success);
 
@@ -29,19 +28,19 @@ class PushService implements Contracts\NotificationService
 
     private function sendToProvider(Sendable $sendable): bool
     {
-        $message = "Cau Samo, toto je testovacia pushka cez OneSignal do browsera :)";
-
-        $sendable->getRecipients()->each(function ($user_id) use ($message) {
+        $sendable->getRecipients()->each(function ($recipient) use ($sendable) {
             OneSignal::sendNotificationToUser(
-                $message,
-                $user_id,
-                // $url = null,
-                // $data = null,
-                // $buttons = null,
-                // $schedule = null
+                $sendable->getContent(),
+                $recipient,
+                $sendable->getUrl(),
+                $sendable->getData(),
+                null,
+                null,
+                $sendable->getSubject(),
+                $sendable->getSubtitle(),
             );
         });
 
-        return false;
+        return true;
     }
 }

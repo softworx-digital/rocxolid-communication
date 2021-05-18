@@ -104,11 +104,11 @@ class Index extends AbstractCrudTable
                 // 'translate' => ..., // adjusted
             ],
         ],
-        'sender_email' => [
+        'recipient_user_id' => [
             'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'sender_email'
+                    'title' => 'recipient_user_id'
                 ],
                 'wrapper' => [
                     'attributes' => [
@@ -117,37 +117,11 @@ class Index extends AbstractCrudTable
                 ],
             ],
         ],
-        'sender_name' => [
+        'heading' => [
             'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'sender_name'
-                ],
-                'wrapper' => [
-                    'attributes' => [
-                        'class' => 'text-center',
-                    ],
-                ],
-            ],
-        ],
-        'recipient_email' => [
-            'type' => ColumnType\Text::class,
-            'options' => [
-                'label' => [
-                    'title' => 'recipient_email'
-                ],
-                'wrapper' => [
-                    'attributes' => [
-                        'class' => 'text-center',
-                    ],
-                ],
-            ],
-        ],
-        'subject' => [
-            'type' => ColumnType\Text::class,
-            'options' => [
-                'label' => [
-                    'title' => 'subject'
+                    'title' => 'heading'
                 ],
             ],
         ],

@@ -17,13 +17,18 @@ class Update extends RocXolidAbstractCrudForm
 
     protected function adjustFieldsDefinition($fields)
     {
+        // @todo macro
         $fields['event_type']['type'] = CollectionSelect::class;
         $fields['event_type']['options']['placeholder']['title'] = 'event_type';
         $fields['event_type']['options']['validation']['rules'][] = 'required';
         $fields['event_type']['options']['validation']['rules'][] = 'class_exists';
-        $fields['event_type']['options']['collection'] = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
-            return __($signature);
-        });
+        $fields['event_type']['options']['collection'] = collect(config('rocXolid.communication.events'))
+            ->filter(function (string $signature, string $type) {
+                return $type::getNotificationTypes()->contains(get_class($this->getModel()));
+            })
+            ->map(function (string $signature, string $type) {
+                return __($signature);
+            });
 
         $fields['recipient_email']['type'] = Tagsinput::class;
         $fields['cc_recipient_email']['type'] = Tagsinput::class;

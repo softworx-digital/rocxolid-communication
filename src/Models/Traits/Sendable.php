@@ -3,12 +3,10 @@
 namespace Softworx\RocXolid\Communication\Models\Traits;
 
 use Illuminate\Database\Eloquent\Relations;
-// rocXolid communication contracts
-use Softworx\RocXolid\Communication\Contracts\CommunicationLoggable;
 // rocXolid communication event contracts
 use Softworx\RocXolid\Communication\Events\Contracts\Sendable as SendableEvent;
 // rocXolid communication model contracts
-use Softworx\RocXolid\Communication\Models\Contracts\Sendable as SendableContract;
+use Softworx\RocXolid\Communication\Models\Contracts as Contracts;
 // rocXolid communication models
 use Softworx\RocXolid\Communication\Models\CommunicationLog;
 
@@ -39,7 +37,7 @@ trait Sendable
     /**
      * {@inheritDoc}
      */
-    public function setEvent(SendableEvent $event): SendableContract
+    public function setEvent(SendableEvent $event): Contracts\Sendable
     {
         $this->event = $event;
 
@@ -49,7 +47,7 @@ trait Sendable
     /**
      * {@inheritDoc}
      */
-    public function setStatus(bool $status): SendableContract
+    public function setStatus(bool $status): Contracts\Sendable
     {
         $this->status = $status;
 
@@ -87,6 +85,14 @@ trait Sendable
     /**
      * {@inheritDoc}
      */
+    public function getData(): ?array
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getAvailableTemplateVariables(): array
     {
         return app($this->event_type)->getSendableVariables();
@@ -105,19 +111,20 @@ trait Sendable
      */
     public function logActivity(bool $success, ?string $error_description = null): CommunicationLog
     {
-        $log = new CommunicationLog([
+        $log = CommunicationLog::make([
             'event' => get_class($this->getEvent()),
             'sender' => $this->getSender(true),
             'recipient' => $this->getRecipients()->join(';'),
             'subject' => $this->getSubject(),
             'content' => $this->getContent(),
+            'data' => json_encode($this->getData()),
             'is_success' => $success,
             'error_description' => $error_description,
         ]);
 
         $this->communicationLogs()->save($log);
 
-        if ($this->getEvent()->getSendingModel() instanceof CommunicationLoggable) {
+        if ($this->getEvent()->getSendingModel() instanceof Contracts\CommunicationLoggable) {
             $this->getEvent()->getSendingModel()->communicationLogs()->save($log);
         }
 

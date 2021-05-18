@@ -25,6 +25,7 @@ class PushNotification extends AbstractCrudModel implements Sendable
     use SoftDeletes;
     use CommonTraits\HasWeb;
     use CommonTraits\HasLanguage;
+    use CommonTraits\HasImage;
     // use CommonTraits\HasLocalization;
     // use CommonTraits\UserGroupAssociatedWeb;
     use Traits\Sendable;
@@ -60,7 +61,7 @@ class PushNotification extends AbstractCrudModel implements Sendable
             $title = '';
         }
 
-        return sprintf('<i class="fa fa-envelope-o mr-10"></i> %s', $title);
+        return sprintf('<i class="fa fa-bell-o mr-10"></i> %s', $title);
     }
 
     /**
@@ -68,22 +69,7 @@ class PushNotification extends AbstractCrudModel implements Sendable
      */
     public function getSender($flat = false)
     {
-        if ($flat) {
-            return sprintf('%s <%s>', $this->sender_name, $this->sender_email);
-        }
-
-        return [
-            'email' => $this->sender_email,
-            'name' => $this->sender_name,
-        ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSubject(): string
-    {
-        return RenderingService::render($this->subject, $this->event->getSendableVariables());
+        return config('app.name');
     }
 
     /**
@@ -91,7 +77,7 @@ class PushNotification extends AbstractCrudModel implements Sendable
      */
     public function setRecipient(string $recipient): Sendable
     {
-        $this->recipient_email = $recipient;
+        $this->recipient_user_id = $recipient;
 
         return $this;
     }
@@ -101,11 +87,47 @@ class PushNotification extends AbstractCrudModel implements Sendable
      */
     public function getRecipients(): Collection
     {
-        if ($this->recipient_email) {
-            return collect(explode(',', $this->recipient_email));
+        if ($this->recipient_user_id) {
+            return collect(explode(',', $this->recipient_user_id));
         } else {
             return $this->event->getRecipients();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getSubject(): string
+    {
+        return RenderingService::render($this->heading, $this->event->getSendableVariables());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getData(): ?array
+    {
+        return $this->event->getData();
+    }
+
+    /**
+     * Get notification subtitle.
+     *
+     * @return string|null
+     */
+    public function getSubtitle(): ?string
+    {
+        return !$this->subtitle ?: RenderingService::render($this->subtitle, $this->event->getSendableVariables());
+    }
+
+    /**
+     * Get notification URL.
+     *
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
     }
 
     /**

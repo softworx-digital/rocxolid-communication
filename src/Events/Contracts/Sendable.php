@@ -17,6 +17,13 @@ use Softworx\RocXolid\Common\Models\Language;
 interface Sendable
 {
     /**
+     * Retrieve notification types supported by the event.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getNotificationTypes(): Collection;
+
+    /**
      * Retrieve the recipients to send notification to.
      *
      * @return \Illuminate\Support\Collection
