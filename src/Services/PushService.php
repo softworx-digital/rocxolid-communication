@@ -3,6 +3,7 @@
 namespace Softworx\RocXolid\Communication\Services;
 
 use OneSignal;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Message;
 // rocXolid communication services
@@ -29,16 +30,20 @@ class PushService implements Contracts\NotificationService
     private function sendToProvider(Sendable $sendable): bool
     {
         $sendable->getRecipients()->each(function ($recipient) use ($sendable) {
-            OneSignal::sendNotificationToUser(
-                $sendable->getContent(),
-                $recipient,
-                $sendable->getUrl(),
-                $sendable->getData(),
-                null,
-                null,
-                $sendable->getSubject(),
-                $sendable->getSubtitle(),
-            );
+            try {
+                OneSignal::sendNotificationToUser(
+                    $sendable->getContent(),
+                    $recipient,
+                    $sendable->getUrl(),
+                    $sendable->getData(),
+                    null,
+                    null,
+                    $sendable->getSubject(),
+                    $sendable->getSubtitle(),
+                );
+            } catch (ClientException $e) { // @todo hotfixed
+                // ignore
+            }
         });
 
         return true;
