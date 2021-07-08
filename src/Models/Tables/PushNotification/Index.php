@@ -104,6 +104,19 @@ class Index extends AbstractCrudTable
                 // 'translate' => ..., // adjusted
             ],
         ],
+        'config' => [
+            'type' => ColumnType\Text::class,
+            'options' => [
+                'label' => [
+                    'title' => 'config'
+                ],
+                'wrapper' => [
+                    'attributes' => [
+                        'class' => 'text-center',
+                    ],
+                ],
+            ],
+        ],
         'recipient_user_id' => [
             'type' => ColumnType\Text::class,
             'options' => [
@@ -195,6 +208,12 @@ class Index extends AbstractCrudTable
     {
         $columns['event_type']['options']['translate'] = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
             return __($signature);
+        });
+
+        $columns['config']['options']['translate'] = collect([ 'default', 'internal' ])->mapWithKeys(function (string $key) {
+            return [
+                $key => $this->getController()->translate(sprintf('choice.config.%s', $key))
+            ];
         });
 
         return $columns;

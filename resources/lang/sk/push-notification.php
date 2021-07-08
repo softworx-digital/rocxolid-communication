@@ -2,6 +2,7 @@
 
 return [
     'column' => [
+        'config' => 'Konfigurácia',
         'is_can_be_turned_off' => 'Vypínateľná',
         'event_type' => 'Akcia',
         'recipient_user_id' => 'User ID prijímateľa',
@@ -11,6 +12,7 @@ return [
         'description' => 'Popis',
     ],
     'field' => [
+        'config' => 'Konfigurácia',
         'is_can_be_turned_off' => 'Môže byť vypnutá používateľom',
         'event_type' => 'Akcia',
         'recipient_user_id' => 'User ID prijímateľa',
@@ -38,8 +40,8 @@ return [
         'sendTestNotificationConfirm' => 'Odoslanie testovacej pushky',
     ],
     'placeholder' => [
-        'email' => 'Adresa, na ktorú má byť e-mail odoslaný',
-        'event_type' => 'Akcia, na základe ktorej sa odošle e-mail',
+        'config' => 'Konfigurácia použitá pri odosielaní notifikácie',
+        'event_type' => 'Akcia, na základe ktorej sa odošle notifikácia',
         'user_id' => 'ID testovacieho používateľa',
     ],
     'text' => [
@@ -50,5 +52,11 @@ return [
     ],
     'permissions' => [
         'sendTestNotification' => 'Posielanie testovacích notifikácií',
+    ],
+    'choice' => [
+        'config' => [
+            'default' => 'Customer',
+            'internal' => 'Internal',
+        ],
     ],
 ];

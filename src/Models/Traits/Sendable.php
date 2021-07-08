@@ -57,6 +57,14 @@ trait Sendable
     /**
      * {@inheritDoc}
      */
+    public function isSuccess(): bool
+    {
+        return $this->status;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getSender($flat = false): string
     {
         return $this->sender;
@@ -124,8 +132,12 @@ trait Sendable
 
         $this->communicationLogs()->save($log);
 
-        if ($this->getEvent()->getSendingModel() instanceof Contracts\CommunicationLoggable) {
-            $this->getEvent()->getSendingModel()->communicationLogs()->save($log);
+        try {
+            if ($this->getEvent()->getSendingModel() instanceof Contracts\CommunicationLoggable) {
+                $this->getEvent()->getSendingModel()->communicationLogs()->save($log);
+            }
+        } catch (\Throwable $e) {
+
         }
 
         return $log;

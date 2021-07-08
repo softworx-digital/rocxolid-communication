@@ -56,7 +56,7 @@ trait SendsTestNotifications
 
             $recipient = $form->getFormField('recipient')->getValue();
 
-            if ($sent = $this->sendNotification($model, $recipient)) {
+            if (($sendable = $this->sendNotification($model, $recipient)) && $sendable->isSuccess()) {
                 $this->response
                     ->notifySuccess($model_viewer_component->translate('text.sending-success'))
                     ->modalClose($model_viewer_component->getDomId('modal-send-test', $model->getKey()));

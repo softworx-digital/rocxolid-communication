@@ -3,9 +3,7 @@
 namespace Softworx\RocXolid\Communication\Models\Forms\PushNotification;
 
 use Softworx\RocXolid\Forms\AbstractCrudForm as RocXolidAbstractCrudForm;
-use Softworx\RocXolid\Forms\Fields\Type\WysiwygTextarea;
-use Softworx\RocXolid\Forms\Fields\Type\CollectionSelect;
-use Softworx\RocXolid\Forms\Fields\Type\Tagsinput;
+use Softworx\RocXolid\Forms\Fields\Type as FieldType;
 
 class Create extends RocXolidAbstractCrudForm
 {
@@ -17,8 +15,16 @@ class Create extends RocXolidAbstractCrudForm
 
     protected function adjustFieldsDefinition($fields)
     {
+        $fields['config']['type'] = FieldType\CollectionSelect::class;
+        $fields['config']['options']['placeholder']['title'] = 'config';
+        $fields['config']['options']['collection'] = collect([ 'default', 'internal' ])->mapWithKeys(function (string $key) {
+            return [
+                $key => $this->getController()->translate(sprintf('choice.config.%s', $key))
+            ];
+        });
+
         // @todo macro
-        $fields['event_type']['type'] = CollectionSelect::class;
+        $fields['event_type']['type'] = FieldType\CollectionSelect::class;
         $fields['event_type']['options']['placeholder']['title'] = 'event_type';
         $fields['event_type']['options']['validation']['rules'][] = 'required';
         $fields['event_type']['options']['validation']['rules'][] = 'class_exists';

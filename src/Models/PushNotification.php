@@ -32,6 +32,7 @@ class PushNotification extends AbstractCrudModel implements Sendable
 
     protected $fillable = [
         'language_id',
+        'config',
         'event_type',
         'is_enabled',
         'is_can_be_turned_off',
@@ -88,9 +89,13 @@ class PushNotification extends AbstractCrudModel implements Sendable
     public function getRecipients(): Collection
     {
         if ($this->recipient_user_id) {
-            return collect(explode(',', $this->recipient_user_id));
+            return collect(explode(',', $this->recipient_user_id))->filter(function (string $player_id) {
+                return (bool)$player_id && !in_array($player_id, [ 'null' ]);
+            });
         } else {
-            return $this->event->getRecipients();
+            return $this->event->getRecipients($this)->filter(function (string $player_id) {
+                return (bool)$player_id && !in_array($player_id, [ 'null' ]);
+            });
         }
     }
 
@@ -150,6 +155,6 @@ class PushNotification extends AbstractCrudModel implements Sendable
         $content = str_replace('-&gt;', '->', $this->content);
         // $content = nl2br($content);
 
-        return RenderingService::render($content, $this->event->getSendableVariables());
+        return strip_tags(RenderingService::render($content, $this->event->getSendableVariables()));
     }
 }
