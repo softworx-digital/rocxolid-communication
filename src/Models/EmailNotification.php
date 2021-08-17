@@ -115,9 +115,11 @@ class EmailNotification extends AbstractCrudModel implements Sendable
      *
      * @return array
      */
-    public function getAttachments(): array
+    public function getAttachments(): Collection
     {
-        return [];
+        return method_exists($this->event, 'getAttachments')
+            ? $this->event->getAttachments($this)
+            : collect([]);
     }
 
     /**

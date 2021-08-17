@@ -51,9 +51,9 @@ class EmailService implements Contracts\NotificationService
                 });
             }
 
-            foreach ($sendable->getAttachments() as $file) {
-                $message->attach($file);
-            }
+            $sendable->getAttachments()->each(function (string $file_path) use ($message) {
+                $message->attach($file_path);
+            });
         });
 
         return collect(Mail::failures())->isEmpty();

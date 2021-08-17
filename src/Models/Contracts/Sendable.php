@@ -84,7 +84,7 @@ interface Sendable
     public function getData(): ?array;
 
     /**
-     * Get notification attachments.
+     * Get notification template variables.
      *
      * @return array
      */
