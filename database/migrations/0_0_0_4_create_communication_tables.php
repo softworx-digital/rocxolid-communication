@@ -114,11 +114,15 @@ class CreateCommunicationTables extends Migration
         return $this;
     }
 
-    private function importDump($table, $package = 'communication')
+    private function importDump($table)
     {
-        $file = realpath(sprintf('%s/../dumps/%s/%s.sql', __DIR__, $package, $table));
+        $file = sprintf('%s/%s.sql', \Softworx\RocXolid\Communication\ServiceProvider::dumpsPublishPath(), $table);
 
-        DB::unprepared(file_get_contents($file));
+        try {
+            DB::unprepared(file_get_contents($file));
+        } catch (\ErrorException $e) {
+            dd(__METHOD__, $file, $e);
+        }
 
         return $this;
     }
