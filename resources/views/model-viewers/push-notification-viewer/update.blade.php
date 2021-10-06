@@ -1,5 +1,5 @@
 <div class="x_panel ajax-overlay">
-    {!! $component->render('include.header-panel') !!}
+    {!! $component->render('include.header') !!}
 
     {{ Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) }}
         {{ Form::hidden('_method', 'PUT') }}

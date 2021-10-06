@@ -54,6 +54,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             $router->group([
                 'namespace' => 'EmailNotification',
                 'prefix' => 'email-notification',
+                'as' => 'email-notification.',
             ], function ($router) {
                 $router->get('/send-test-notification/{email_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
                 $router->post('/send-test-notification/{email_notification}', 'Controller@sendTestNotification')->name('send-test');
@@ -62,6 +63,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             $router->group([
                 'namespace' => 'PushNotification',
                 'prefix' => 'push-notification',
+                'as' => 'push-notification.',
             ], function ($router) {
                 $router->get('/send-test-notification/{push_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
                 $router->post('/send-test-notification/{push_notification}', 'Controller@sendTestNotification')->name('send-test');
@@ -70,6 +72,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             $router->group([
                 'namespace' => 'SmsNotification',
                 'prefix' => 'sms-notification',
+                'as' => 'sms-notification.',
             ], function ($router) {
                 $router->get('/send-test-notification/{sms_notification}', 'Controller@sendTestNotificationConfirm')->name('send-test-confirm');
                 $router->post('/send-test-notification/{sms_notification}', 'Controller@sendTestNotification')->name('send-test');
@@ -78,6 +81,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             $router->group([
                 'namespace' => 'CommunicationLog',
                 'prefix' => 'communication-log',
+                'as' => 'communication-log.',
             ], function ($router) {
                 $router->get('/model/{relation}/{communication_log}', 'Controller@modelLog');
             });
