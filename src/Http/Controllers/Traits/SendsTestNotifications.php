@@ -85,7 +85,7 @@ trait SendsTestNotifications
         $arguments = collect();
 
         collect($reflection->getConstructor()->getParameters())->each(function ($argument) use (&$arguments) {
-            $arguments->put($argument->getName(), factory($argument->getType()->getName())->make());
+            $arguments->put($argument->getName(), $argument->getType()->getName()::factory()->make());
         });
 
         $event = app()->makeWith($notification->event_type, $arguments->all());

@@ -15,6 +15,7 @@ class CreateCommunicationTables extends Migration
         $this
             ->emailNotification()
             ->smsNotification()
+            ->pushNotification()
             ->communicationLog();
     }
     /**
@@ -27,6 +28,7 @@ class CreateCommunicationTables extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Schema::dropIfExists('email_notifications');
         Schema::dropIfExists('sms_notifications');
+        Schema::dropIfExists('push_notifications');
         Schema::dropIfExists('communication_logs');
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
@@ -36,6 +38,8 @@ class CreateCommunicationTables extends Migration
         Schema::create('email_notifications', function (Blueprint $table) {
             $table->increments('id')->unique()->index();
             $table->unsignedInteger('web_id')->nullable();
+            $table->unsignedInteger('language_id')->nullable();
+            $table->string('config')->default('default');
             $table->boolean('is_enabled')->default(0);
             $table->boolean('is_can_be_turned_off')->default(1);
             $table->string('event_type');
@@ -46,7 +50,7 @@ class CreateCommunicationTables extends Migration
             $table->string('bcc_recipient_email')->nullable();
             $table->unsignedTinyInteger('priority')->default(3);
             $table->string('subject');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -68,12 +72,44 @@ class CreateCommunicationTables extends Migration
         Schema::create('sms_notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('web_id')->nullable();
+            $table->unsignedInteger('language_id')->nullable();
+            $table->string('config')->default('default');
             $table->boolean('is_enabled')->default(0);
             $table->string('event_type');
             $table->string('sender');
             $table->string('recipient_phone_number')->nullable();
-            $table->text('content');
-            $table->text('description');
+            $table->text('content')->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
+
+            $table->foreign('web_id')
+                ->references('id')
+                ->on('webs')
+                ->onDelete('cascade');
+        });
+
+        return $this;
+    }
+
+    protected function pushNotification()
+    {
+        Schema::create('push_notifications', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('web_id')->nullable();
+            $table->unsignedInteger('language_id')->nullable();
+            $table->string('config')->default('default');
+            $table->boolean('is_enabled')->default(0);
+            $table->string('event_type');
+            $table->string('recipient_user_id')->nullable();
+            $table->string('heading');
+            $table->string('subtitle')->nullable();
+            $table->string('url')->nullable();
+            $table->text('content')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->integer('created_by')->unsigned()->nullable();
@@ -102,7 +138,9 @@ class CreateCommunicationTables extends Migration
             $table->string('recipient');
             $table->string('subject')->nullable();
             $table->text('content');
+            $table->json('data');
             $table->boolean('is_success');
+            $table->boolean('is_read')->default(0);
             $table->text('error_description')->nullable();
             $table->timestamps();
             $table->softDeletes();
