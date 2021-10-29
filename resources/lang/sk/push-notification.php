@@ -2,22 +2,22 @@
 
 return [
     'column' => [
+        'config' => 'Konfigurácia',
         'is_can_be_turned_off' => 'Vypínateľná',
         'event_type' => 'Akcia',
-        'sender_email' => 'e-mail odosielateľa',
-        'sender_name' => 'Meno odosielateľa',
-        'recipient_email' => 'e-mail prijímateľa',
-        'subject' => 'Predmet',
+        'recipient_user_id' => 'User ID prijímateľa',
+        'heading' => 'Titulok',
+        'subtitle' => 'Podtitulok',
         'content' => 'Obsah',
         'description' => 'Popis',
     ],
     'field' => [
+        'config' => 'Konfigurácia',
         'is_can_be_turned_off' => 'Môže byť vypnutá používateľom',
         'event_type' => 'Akcia',
-        'sender_email' => 'e-mail odosielateľa',
-        'sender_name' => 'Meno odosielateľa',
-        'recipient_email' => 'e-mail prijímateľa',
-        'subject' => 'Predmet',
+        'recipient_user_id' => 'User ID prijímateľa',
+        'heading' => 'Titulok',
+        'subtitle' => 'Podtitulok',
         'content' => 'Obsah',
         'description' => 'Popis - interná poznámka',
     ],
@@ -40,8 +40,8 @@ return [
         'sendTestNotificationConfirm' => 'Odoslanie testovacej pushky',
     ],
     'placeholder' => [
-        'email' => 'Adresa, na ktorú má byť e-mail odoslaný',
-        'event_type' => 'Akcia, na základe ktorej sa odošle e-mail',
+        'config' => 'Konfigurácia použitá pri odosielaní notifikácie',
+        'event_type' => 'Akcia, na základe ktorej sa odošle notifikácia',
         'user_id' => 'ID testovacieho používateľa',
     ],
     'text' => [
@@ -52,5 +52,11 @@ return [
     ],
     'permissions' => [
         'sendTestNotification' => 'Posielanie testovacích notifikácií',
+    ],
+    'choice' => [
+        'config' => [
+            'default' => 'Customer',
+            'internal' => 'Internal',
+        ],
     ],
 ];

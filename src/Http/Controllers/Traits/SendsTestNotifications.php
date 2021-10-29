@@ -4,11 +4,6 @@ namespace Softworx\RocXolid\Communication\Http\Controllers\Traits;
 
 // rocXolid utils
 use Softworx\RocXolid\Http\Requests\CrudRequest;
-// rocXolid model contracts
-use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid communication services
-use Softworx\RocXolid\Communication\Services\EmailService;
-use Softworx\RocXolid\Communication\Services\PushService;
 // rocXolid communication model contracts
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
@@ -16,19 +11,15 @@ use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
  * Trait to send test notification.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid
+ * @package Softworx\RocXolid\Communication
  * @version 1.0.0
  */
 trait SendsTestNotifications
 {
     /**
-     * Display the dialog to enter testing e-mail.
-     *
-     * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
-     * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
+     * {@inheritDoc}
      */
-    public function sendTestNotificationConfirm(CrudRequest $request, Crudable $model)//: View
+    public function sendTestNotificationConfirm(CrudRequest $request, Sendable $model)//: View
     {
         $this->authorize('sendTestNotification', $model);
 
@@ -52,13 +43,9 @@ trait SendsTestNotifications
     }
 
     /**
-     * Send test notification.
-     *
-     * @Softworx\RocXolid\Annotations\AuthorizedAction(policy_ability_group="execute",policy_ability="sendTestNotification")
-     * @param \Softworx\RocXolid\Http\Requests\CrudRequest $request Incoming request.
-     * @param \Softworx\RocXolid\Models\Contracts\Crudable $model
+     * {@inheritDoc}
      */
-    public function sendTestNotification(CrudRequest $request, Crudable $model)//: Response - returns JSON for ajax calls
+    public function sendTestNotification(CrudRequest $request, Sendable $model)//: Response - returns JSON for ajax calls
     {
         $this->authorize('sendTestNotification', $model);
 
@@ -67,9 +54,9 @@ trait SendsTestNotifications
         if ($form->submit()->isValid()) {
             $model_viewer_component = $this->getModelViewerComponent($model);
 
-            $email = $form->getFormField('user_id')->getValue();
+            $recipient = $form->getFormField('recipient')->getValue();
 
-            if ($sent = $this->sendNotification($model, $email)) {
+            if (($sendable = $this->sendNotification($model, $recipient)) && $sendable->isSuccess()) {
                 $this->response
                     ->notifySuccess($model_viewer_component->translate('text.sending-success'))
                     ->modalClose($model_viewer_component->getDomId('modal-send-test', $model->getKey()));
@@ -88,25 +75,24 @@ trait SendsTestNotifications
      * Create necessary mocks and send the notification.
      *
      * @param \Softworx\RocXolid\Communication\Models\Contracts\Sendable $notification
-     * @param string $email
+     * @param string $recipient
      * @return \Softworx\RocXolid\Communication\Models\Contracts\Sendable
      */
-    protected function sendNotification(Sendable $notification, string $email): Sendable
+    protected function sendNotification(Sendable $notification, string $recipient): Sendable
     {
         $reflection = new \ReflectionClass($notification->event_type);
 
         $arguments = collect();
 
         collect($reflection->getConstructor()->getParameters())->each(function ($argument) use (&$arguments) {
-            $arguments->put($argument->getName(), factory($argument->getType()->getName())->make());
+            $arguments->put($argument->getName(), $argument->getType()->getName()::factory()->make());
         });
 
         $event = app()->makeWith($notification->event_type, $arguments->all());
 
         $notification->setEvent($event);
-        $notification->setRecipient($email);
+        $notification->setRecipient($recipient);
 
-        // return (new EmailService($notification))->send();
-        return (new PushService($notification))->send();
+        return $this->notificationService()->send($notification);
     }
 }

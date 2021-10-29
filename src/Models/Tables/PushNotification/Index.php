@@ -72,6 +72,24 @@ class Index extends AbstractCrudTable
                 ],
             ],
         ],
+        'language_id' => [
+            'type' => ColumnType\ModelRelation::class,
+            'options' => [
+                'ajax' => true,
+                'label' => [
+                    'title' => 'language_id'
+                ],
+                'relation' => [
+                    'name' => 'language',
+                    'column' => 'title',
+                ],
+                'wrapper' => [
+                    'attributes' => [
+                        'class' => 'text-center',
+                    ],
+                ],
+            ],
+        ],
         'event_type' => [
             'type' => ColumnType\Text::class,
             'options' => [
@@ -86,11 +104,11 @@ class Index extends AbstractCrudTable
                 // 'translate' => ..., // adjusted
             ],
         ],
-        'sender_email' => [
+        'config' => [
             'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'sender_email'
+                    'title' => 'config'
                 ],
                 'wrapper' => [
                     'attributes' => [
@@ -99,11 +117,11 @@ class Index extends AbstractCrudTable
                 ],
             ],
         ],
-        'sender_name' => [
+        'recipient_user_id' => [
             'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'sender_name'
+                    'title' => 'recipient_user_id'
                 ],
                 'wrapper' => [
                     'attributes' => [
@@ -112,24 +130,11 @@ class Index extends AbstractCrudTable
                 ],
             ],
         ],
-        'recipient_email' => [
+        'heading' => [
             'type' => ColumnType\Text::class,
             'options' => [
                 'label' => [
-                    'title' => 'recipient_email'
-                ],
-                'wrapper' => [
-                    'attributes' => [
-                        'class' => 'text-center',
-                    ],
-                ],
-            ],
-        ],
-        'subject' => [
-            'type' => ColumnType\Text::class,
-            'options' => [
-                'label' => [
-                    'title' => 'subject'
+                    'title' => 'heading'
                 ],
             ],
         ],
@@ -203,6 +208,12 @@ class Index extends AbstractCrudTable
     {
         $columns['event_type']['options']['translate'] = collect(config('rocXolid.communication.events'))->map(function ($signature, $event_class) {
             return __($signature);
+        });
+
+        $columns['config']['options']['translate'] = collect([ 'default', 'internal' ])->mapWithKeys(function (string $key) {
+            return [
+                $key => $this->getController()->translate(sprintf('choice.config.%s', $key))
+            ];
         });
 
         return $columns;

@@ -60,15 +60,15 @@ class SmsNotification extends AbstractCrudModel implements Sendable
         if ($this->recipient_phone_number) {
             return collect($this->recipient_phone_number);
         } else {
-            return $this->event->getRecipients();
+            return $this->event->getRecipients($this);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getSubject()
+    public function getSubject(): string
     {
-        return null;
+        return '';
     }
 }

@@ -63,6 +63,13 @@ interface Sendable
     public function getRecipients(): Collection;
 
     /**
+     * Get notification subject.
+     *
+     * @return string
+     */
+    public function getSubject(): string;
+
+    /**
      * Get notification content.
      *
      * @return string
@@ -70,7 +77,14 @@ interface Sendable
     public function getContent(): string;
 
     /**
-     * Get notification attachments.
+     * Get notification data.
+     *
+     * @return array|null
+     */
+    public function getData(): ?array;
+
+    /**
+     * Get notification template variables.
      *
      * @return array
      */

@@ -4,6 +4,8 @@ namespace Softworx\RocXolid\Communication\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
+// rocXolid communication package provider
+use Softworx\RocXolid\Communication\ServiceProvider as PackageServiceProvider;
 
 /**
  * rocXolid views & composers service provider.
@@ -36,9 +38,9 @@ class ViewServiceProvider extends IlluminateServiceProvider
     private function load(): IlluminateServiceProvider
     {
         // customized views preference
-        $this->loadViewsFrom(resource_path('views/vendor/rocXolid/communication'), 'rocXolid:communication');
+        $this->loadViewsFrom(PackageServiceProvider::viewsPublishPath(), 'rocXolid:communication');
         // pre-defined views fallback
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'rocXolid:communication');
+        $this->loadViewsFrom(PackageServiceProvider::viewsSourcePath(dirname(dirname(__DIR__))), 'rocXolid:communication');
 
         return $this;
     }

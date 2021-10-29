@@ -1,5 +1,5 @@
 <div class="x_panel ajax-overlay">
-    {!! $component->render('include.header-panel') !!}
+    {!! $component->render('include.header') !!}
 
     {{ Form::open($component->getFormComponent()->getOptions()->except(['scripts'])->toArray()) }}
         {{ Form::hidden('_method', 'PUT') }}
@@ -13,6 +13,19 @@
             </div>
             <div class="keep-scroll-position">
                 <div class="col-xs-5 padding-top-10">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                        @if ($component->getModel()->image()->exists())
+                            {!! $component->getModel()->image->getModelViewerComponent()->render('related.show', [ 'attribute' => 'image', 'relation' => 'parent' ]) !!}
+                        @else
+                            {!! $component->getModel()->image()->make()->getModelViewerComponent()->render('related.unavailable', [
+                                'attribute' => 'image',
+                                'relation' => 'parent',
+                                'related' => $component->getModel(),
+                            ]) !!}
+                        @endif
+                        </div>
+                    </div>
                     <h3>{!! $component->translate('text.tokens') !!}</h3>
                     <p>{!! $component->translate('text.tokens-help') !!}</p>
                 </div>

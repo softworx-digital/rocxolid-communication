@@ -21,7 +21,7 @@ class SendTest extends RocXolidAbstractCrudForm
      * {@inheritDoc}
      */
     protected $fields = [
-        'user_id' => [
+        'recipient' => [
             'type' => FieldType\Input::class,
             'options' => [
                 'validation' => [
@@ -57,7 +57,7 @@ class SendTest extends RocXolidAbstractCrudForm
     /**
      * {@inheritDoc}
      */
-    protected function adjustFieldsDefinition($fields)
+    protected function adjustFieldsDefinition(array $fields): array
     {
         return $fields;
     }

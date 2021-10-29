@@ -2,52 +2,54 @@
 
 namespace Softworx\RocXolid\Communication\Services;
 
-use OneSignal;
-//
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\Message;
-//
+use Berkayk\OneSignal\OneSignalClient;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+// rocXolid communication models
 use Softworx\RocXolid\Communication\Models\Contracts\Sendable;
 
-class PushService
+class PushService implements Contracts\NotificationService
 {
-    private $sendable;
-
-    public function __construct(Sendable $sendable)
+    public function send(Sendable $sendable)
     {
-        $this->sendable = $sendable;
-    }
+        if (!empty($sendable->getContent())) {
+            $success = $this->sendToProvider($sendable);
 
-    public function send()
-    {
-        if (!empty($this->sendable->getContent())) {
-            $success = $this->sendToProvider();
+            $sendable->logActivity($success);
+            $sendable->setStatus($success);
 
-            // @todo log failed recipients with Mail::failures()
-            $this->sendable->logActivity($success);
-            $this->sendable->setStatus($success);
-
-            return $this->sendable;
+            return $sendable;
         } else {
             throw new \RuntimeException('Message is empty, cannot send!');
         }
     }
 
-    private function sendToProvider(): bool
+    private function sendToProvider(Sendable $sendable): bool
     {
-        $message = "Cau Samo, toto je testovacia pushka cez OneSignal do browsera :)";
+        try {
+            $sendable->getRecipients()->each(function ($recipient) use ($sendable) {
+                $config = config(sprintf('onesignal.%s', $sendable->config ?: 'default'));
 
-        $this->sendable->getRecipients()->each(function ($user_id) use ($message) {
-            OneSignal::sendNotificationToUser(
-                $message,
-                $user_id,
-                // $url = null,
-                // $data = null,
-                // $buttons = null,
-                // $schedule = null
-            );
-        });
+                $client = new OneSignalClient($config['app_id'], $config['rest_api_key'], $config['user_auth_key']);
+                $client->sendNotificationToUser(
+                    $sendable->getContent(),
+                    $recipient,
+                    $sendable->getUrl(),
+                    $sendable->getData(),
+                    null,
+                    null,
+                    $sendable->getSubject(),
+                    $sendable->getSubtitle(),
+                );
+            });
+        } catch (ClientException $e) {
+            logger()->error($e);
+            return false;
+        } catch (RequestException $e) {
+            logger()->error($e);
+            return false;
+        }
 
-        return false;
+        return true;
     }
 }

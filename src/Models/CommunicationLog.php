@@ -4,7 +4,6 @@ namespace Softworx\RocXolid\Communication\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Softworx\RocXolid\Models\AbstractCrudModel;
-use Softworx\RocXolid\Commerce\Models\Order;
 
 class CommunicationLog extends AbstractCrudModel
 {
@@ -16,6 +15,7 @@ class CommunicationLog extends AbstractCrudModel
         'recipient',
         'subject',
         'content',
+        'data',
         'is_success',
         'error_description',
     ];
@@ -23,12 +23,12 @@ class CommunicationLog extends AbstractCrudModel
     protected $relationships = [
     ];
 
-    public function orders()
+    public function sendable()
     {
-        return $this->morphTo(Order::class);
+        return $this->morphTo();
     }
 
-    public function sendable()
+    public function model()
     {
         return $this->morphTo();
     }

@@ -24,6 +24,7 @@ return [
         'subject' => 'Predmet',
         'content' => 'Obsah',
         'description' => 'Popis - interná poznámka',
+        'recipient' => 'e-mail',
     ],
     'model' => [
         'title' => [

@@ -72,6 +72,24 @@ class Index extends AbstractCrudTable
                 ],
             ],
         ],
+        'language_id' => [
+            'type' => ColumnType\ModelRelation::class,
+            'options' => [
+                'ajax' => true,
+                'label' => [
+                    'title' => 'language_id'
+                ],
+                'relation' => [
+                    'name' => 'language',
+                    'column' => 'title',
+                ],
+                'wrapper' => [
+                    'attributes' => [
+                        'class' => 'text-center',
+                    ],
+                ],
+            ],
+        ],
         'event_type' => [
             'type' => ColumnType\Text::class,
             'options' => [

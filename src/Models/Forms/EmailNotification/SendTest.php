@@ -2,9 +2,9 @@
 
 namespace Softworx\RocXolid\Communication\Models\Forms\EmailNotification;
 
+// rocXolid forms & fields
 use Softworx\RocXolid\Forms\AbstractCrudForm as RocXolidAbstractCrudForm;
-use Softworx\RocXolid\Forms\Fields\Type\Email;
-use Softworx\RocXolid\Forms\Fields\Type\ButtonSubmit;
+use Softworx\RocXolid\Forms\Fields\Type as FieldType;
 
 class SendTest extends RocXolidAbstractCrudForm
 {
@@ -15,8 +15,8 @@ class SendTest extends RocXolidAbstractCrudForm
     ];
 
     protected $fields = [
-        'email' => [
-            'type' => Email::class,
+        'recipient' => [
+            'type' => FieldType\Email::class,
             'options' => [
                 'validation' => [
                     'rules' => [
@@ -33,7 +33,7 @@ class SendTest extends RocXolidAbstractCrudForm
 
     protected $buttons = [
         'submit' => [
-            'type' => ButtonSubmit::class,
+            'type' => FieldType\ButtonSubmit::class,
             'options' => [
                 'ajax' => true,
                 'label' => [
@@ -46,7 +46,7 @@ class SendTest extends RocXolidAbstractCrudForm
         ],
     ];
 
-    protected function adjustFieldsDefinition($fields)
+    protected function adjustFieldsDefinition(array $fields): array
     {
         return $fields;
     }
